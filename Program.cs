@@ -15,7 +15,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 //sadfa
+
+/// <summary>
+/// Comment
+/// </summary>
+/// ///
+/// 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
