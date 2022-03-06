@@ -36,5 +36,9 @@ namespace ATC_BE.Models
         // Optional fields
         public DateTime? BirthDate { get; set; }
         public Nationality? Nationality { get; set; }
+
+
+        // account status
+        // remote percentage
     }
 }

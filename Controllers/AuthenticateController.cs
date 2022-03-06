@@ -65,7 +65,9 @@ namespace ATC_BE.Controllers
             var authSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
-                expires: DateTime.Now.AddHours(3),
+                _configuration["JWT:Issuer"],
+                _configuration["JWT:Audience"],
+                expires: DateTime.Now.AddMinutes(15),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
                 );

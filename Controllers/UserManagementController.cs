@@ -27,7 +27,7 @@ namespace ATC_BE.Controllers
             _dbContext = dbContext;
         }
 
-
+        // autorizare doar admin
         [HttpPost]
         [Route("register-user")]
         public async Task<IActionResult> RegisterUser(UserRegisterModel registerModel)
