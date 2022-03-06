@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ATC_BE.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,5 +16,7 @@ namespace ATC_BE.Data
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<UserModel> UserDetails { get; set; }
     }
 }

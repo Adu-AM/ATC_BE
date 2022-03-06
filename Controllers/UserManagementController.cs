@@ -67,6 +67,21 @@ namespace ATC_BE.Controllers
             if(!roleResult.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
+            // Adding the details of the user in DB
+            UserModel userDetails = new UserModel
+            {
+                AccountId = user.Id,
+                FirstName = registerModel.FirstName,
+                LastName = registerModel.LastName,
+                Email = registerModel.Email,
+                Role = registerModel.Role,
+                Gender = registerModel.Gender,
+                BirthDate = registerModel.BirthDate,
+                Nationality = registerModel.Nationality
+            };
+
+            _dbContext.UserDetails.Add(userDetails);
+            await _dbContext.SaveChangesAsync();
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }

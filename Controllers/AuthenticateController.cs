@@ -36,9 +36,15 @@ namespace ATC_BE.Controllers
                 // This returns a list of roles but the accounts should have just 1 role
                 var userRole = await _userManager.GetRolesAsync(user);
 
+
+                // WIP
+                //UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
+                //if (userDetails == null)
+                //    return Unauthorized();
+
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Name, user.UserName),// Email
                     new Claim(ClaimTypes.Role, userRole[0]),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
