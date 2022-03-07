@@ -38,14 +38,20 @@ namespace ATC_BE.Controllers
 
 
                 // WIP
-                //UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
-                //if (userDetails == null)
-                //    return Unauthorized();
+                UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
+                if (userDetails == null)
+                    return Unauthorized();
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),// Email
-                    new Claim(ClaimTypes.Role, userRole[0]),
+                    new Claim(ClaimTypes.Name, user.UserName), // Email
+                    //new Claim(ClaimTypes.GivenName, userDetails.FirstName),
+                    //new Claim(ClaimTypes.Surname, userDetails.LastName),
+                    //new Claim(ClaimTypes.Role, userRole[0]),
+                    //new Claim(ClaimTypes.Gender, userDetails.Gender),
+                    //new Claim(ClaimTypes.DateOfBirth, userDetails.BirthDate.ToString()),
+                    //new Claim("Nationality", userDetails.Nationality.Value.ToString()),
+                    //new Claim("Status", userDetails.AccountStatus.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -54,7 +60,16 @@ namespace ATC_BE.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    email = user.UserName,
+                    firstName = userDetails.FirstName,
+                    lastName = userDetails.LastName,
+                    role = userRole[0],
+                    gender = userDetails.Gender,
+                    birthDate = userDetails.BirthDate.ToString(),
+                    nationality = userDetails.Nationality.ToString(),
+                    accountStatus = userDetails.AccountStatus.ToString(),
+                    remotePercentage = userDetails.RemotePercentage
                 });
             }
             return Unauthorized();
