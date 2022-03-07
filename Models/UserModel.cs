@@ -5,12 +5,8 @@ namespace ATC_BE.Models
 {
     public class UserModel
     {
-        
-        //[Required]
-        //public int UserId { get; set; } // this will be used for easier relationships between db tables
-
         [Required]
-        public string? AccountId { get; set; } // thise represent the account id when its registered using identity
+        public string? AccountId { get; set; } // this represents the account id when its registered using identity
 
         [Key]
         [EmailAddress]
@@ -33,12 +29,15 @@ namespace ATC_BE.Models
         [Required]
         public string? Gender { get; set; }
 
+        [Required]
+        public AccountStatus AccountStatus { get; set; } = AccountStatus.Active; // La creearea contului acesta devine activ
+
+        [Required]
+        [Range(0, 100)]
+        public int RemotePercentage { get; set; } = 0;
+
         // Optional fields
         public DateTime? BirthDate { get; set; }
         public Nationality? Nationality { get; set; }
-
-
-        // account status
-        // remote percentage
     }
 }
