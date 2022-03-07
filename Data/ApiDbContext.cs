@@ -19,7 +19,9 @@ namespace ATC_BE.Data
 
         public DbSet<UserModel> UserDetails { get; set; }
 
+
         //building
+        public DbSet<BuildingModel> BuildingModels { get; set; }
         //office
         //desk
     }
