@@ -1,12 +1,16 @@
 ﻿using ATC_BE.Data.Enums;
+using ATC_BE.Data.DefaultData;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace ATC_BE.Models
 {
     public class UserModel
     {
+
         [Required]
-        public string? AccountId { get; set; } // this represents the account id when its registered using identity
+        public string? AccountId { get; set; } // thise represent the account id when its registered using identity
 
         [Key]
         [EmailAddress]
@@ -30,7 +34,7 @@ namespace ATC_BE.Models
         public string? Gender { get; set; }
 
         [Required]
-        public AccountStatus AccountStatus { get; set; } = AccountStatus.Active; // La creearea contului acesta devine activ
+        public string? AccountStatus { get; set; }  // La creearea contului acesta devine activ
 
         [Required]
         [Range(0, 100)]
@@ -38,6 +42,8 @@ namespace ATC_BE.Models
 
         // Optional fields
         public DateTime? BirthDate { get; set; }
+
+        [Column(TypeName = "nvarchar(24)")]
         public Nationality? Nationality { get; set; }
     }
 }

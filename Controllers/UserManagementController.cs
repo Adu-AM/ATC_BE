@@ -4,6 +4,9 @@ using ATC_BE.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+
 
 namespace ATC_BE.Controllers
 {
@@ -25,6 +28,7 @@ namespace ATC_BE.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
             _dbContext = dbContext;
+
         }
 
         // autorizare doar admin
@@ -77,6 +81,7 @@ namespace ATC_BE.Controllers
                 Role = registerModel.Role,
                 Gender = registerModel.Gender,
                 BirthDate = registerModel.BirthDate,
+                AccountStatus = AccountStatus.Ative,
                 Nationality = registerModel.Nationality
             };
 
@@ -87,5 +92,16 @@ namespace ATC_BE.Controllers
         }
 
 
+
+        [HttpGet]
+        [Route("get-users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _dbContext.UserDetails.ToListAsync();
+            var jsonString = JsonSerializer.Serialize(users);
+
+            return Ok(jsonString);
+        }
+
     }
-}
+} 
