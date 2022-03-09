@@ -1,12 +1,11 @@
 ﻿using ATC_BE.Data;
-using ATC_BE.Data.DefaultData;
+using ATC_BE.Data.Enums;
 using ATC_BE.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
-
 
 namespace ATC_BE.Controllers
 {
@@ -46,17 +45,7 @@ namespace ATC_BE.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
 
-            // Looking in DB if roles are there, if not put them there
-            if (!await _roleManager.RoleExistsAsync(UserRole.Administrator))
-                await _roleManager.CreateAsync(new IdentityRole(UserRole.Administrator));
-
-            if (!await _roleManager.RoleExistsAsync(UserRole.AdministratorOffice))
-                await _roleManager.CreateAsync(new IdentityRole(UserRole.AdministratorOffice));
-
-            if (!await _roleManager.RoleExistsAsync(UserRole.Employee))
-                await _roleManager.CreateAsync(new IdentityRole(UserRole.Employee));
-
-            if (!await _roleManager.RoleExistsAsync(registerModel.Role))
+            if (!await _roleManager.RoleExistsAsync(registerModel.Role.ToString()))
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User role doesn't exist in Db" });
             }
@@ -67,7 +56,7 @@ namespace ATC_BE.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
             // Register the role
-            var roleResult = await _userManager.AddToRoleAsync(user, registerModel.Role);
+            var roleResult = await _userManager.AddToRoleAsync(user, registerModel.Role.ToString());
             if(!roleResult.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
@@ -81,7 +70,7 @@ namespace ATC_BE.Controllers
                 Role = registerModel.Role,
                 Gender = registerModel.Gender,
                 BirthDate = registerModel.BirthDate,
-                AccountStatus = AccountStatus.Ative,
+                AccountStatus = AccountStatus.Active,
                 Nationality = registerModel.Nationality
             };
 
@@ -97,6 +86,7 @@ namespace ATC_BE.Controllers
         [Route("get-users")]
         public async Task<IActionResult> GetUsers()
         {
+
             var users = await _dbContext.UserDetails.ToListAsync();
             var jsonString = JsonSerializer.Serialize(users);
 

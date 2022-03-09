@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309194724_SeedingRepair6")]
+    partial class SeedingRepair6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,21 +68,6 @@ namespace ATC_BE.Migrations
                     b.HasKey("Email");
 
                     b.ToTable("UserDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "admin@example.com",
-                            AccountId = "1",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "admin",
-                            Gender = "Other",
-                            LastName = "admin",
-                            Nationality = "Romanian",
-                            RemotePercentage = 100,
-                            Role = "Administrator"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -112,22 +99,22 @@ namespace ATC_BE.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            ConcurrencyStamp = "12211fd0-09f0-44c9-904e-dbd46507015c",
+                            Id = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
+                            ConcurrencyStamp = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "2",
-                            ConcurrencyStamp = "7491af0d-1db4-4082-9fad-05565facc3b5",
+                            Id = "66634b0a-3d68-45f4-9c7d-2c20549494db",
+                            ConcurrencyStamp = "66634b0a-3d68-45f4-9c7d-2c20549494db",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "3",
-                            ConcurrencyStamp = "338d7f6a-64fa-4696-98fc-9c337b92b1df",
+                            Id = "d402aa31-f7eb-4b8a-9562-5488626cede8",
+                            ConcurrencyStamp = "d402aa31-f7eb-4b8a-9562-5488626cede8",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -225,15 +212,15 @@ namespace ATC_BE.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cbc5ad1f-060f-4282-b2f1-d5467c087428",
+                            ConcurrencyStamp = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECx82Kih75g6oBx2Iyqgw3FjKqjrlXG0WiEbfxF+/fVKY5ZT/ioiu6Ut2EWPjJ6n1g==",
+                            PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eca74196-2743-404f-8ae8-f3dc533e7494",
+                            SecurityStamp = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         });
@@ -299,13 +286,6 @@ namespace ATC_BE.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "1"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

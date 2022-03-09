@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309210730_SeedingAdmin")]
+    partial class SeedingAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,21 +68,6 @@ namespace ATC_BE.Migrations
                     b.HasKey("Email");
 
                     b.ToTable("UserDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "admin@example.com",
-                            AccountId = "1",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "admin",
-                            Gender = "Other",
-                            LastName = "admin",
-                            Nationality = "Romanian",
-                            RemotePercentage = 100,
-                            Role = "Administrator"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -113,21 +100,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "12211fd0-09f0-44c9-904e-dbd46507015c",
+                            ConcurrencyStamp = "ddb335e0-2598-4381-a5ae-206c1f91220b",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "7491af0d-1db4-4082-9fad-05565facc3b5",
+                            ConcurrencyStamp = "46423762-d8f2-40e0-b038-4f48c7763360",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "338d7f6a-64fa-4696-98fc-9c337b92b1df",
+                            ConcurrencyStamp = "4d0a7030-43c8-448b-89be-8fbf44cf176f",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -227,13 +214,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cbc5ad1f-060f-4282-b2f1-d5467c087428",
+                            ConcurrencyStamp = "07dd571e-70f5-40c9-8fb5-8dfe33fc3eac",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECx82Kih75g6oBx2Iyqgw3FjKqjrlXG0WiEbfxF+/fVKY5ZT/ioiu6Ut2EWPjJ6n1g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGqsaj1eLugaarBdUV65DhqsCc1P8hKQiV020Rh9mCgunHpt2J1AZTHLXAgCah5ePQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eca74196-2743-404f-8ae8-f3dc533e7494",
+                            SecurityStamp = "478bfbbc-3cf0-47e7-980c-0d4c3c10ef87",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         });
