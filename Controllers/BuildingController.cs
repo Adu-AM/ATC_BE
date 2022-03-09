@@ -49,7 +49,7 @@ namespace ATC_BE.Controllers
         [HttpPut]
         public async Task<ActionResult<List<BuildingModel>>> UpdateBuilding(BuildingModel request)
         {
-            var dbBuilding = await apiDbContext.BuildingModels.FindAsync(request.Id);
+            var dbBuilding = await apiDbContext.BuildingModels.FindAsync(request.BuildingId);
             if (dbBuilding == null)
             {
                 return NotFound("Building not found");

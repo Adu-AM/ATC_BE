@@ -23,6 +23,7 @@ namespace ATC_BE.Data
         //building
         public DbSet<BuildingModel> BuildingModels { get; set; }
         //office
+        public DbSet<OfficeModel> OfficeModels { get; set; }
         //desk
     }
 }
