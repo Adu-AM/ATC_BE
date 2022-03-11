@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309164512_SeedingRoles2")]
+    partial class SeedingRoles2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace ATC_BE.Migrations
 
                     b.Property<string>("AccountStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(24)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
@@ -46,7 +48,7 @@ namespace ATC_BE.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(24)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -59,28 +61,12 @@ namespace ATC_BE.Migrations
                     b.Property<int>("RemotePercentage")
                         .HasColumnType("int");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(24)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.HasKey("Email");
 
                     b.ToTable("UserDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "admin@example.com",
-                            AccountId = "1",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "admin",
-                            Gender = "Other",
-                            LastName = "admin",
-                            Nationality = "Romanian",
-                            RemotePercentage = 100,
-                            Role = "Administrator"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -112,24 +98,21 @@ namespace ATC_BE.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            ConcurrencyStamp = "1b3b2d56-5867-4550-bc12-505b2fc3acec",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
+                            Id = "25559cf8-2ca0-4b14-b62c-2eb496f42bdf",
+                            ConcurrencyStamp = "79e968c9-2465-49de-9925-dd488ef12598",
+                            Name = "Administrator"
                         },
                         new
                         {
-                            Id = "2",
-                            ConcurrencyStamp = "91bc374b-9434-4ebd-9de1-dae29bd850d1",
-                            Name = "OfficeAdministrator",
-                            NormalizedName = "OFFICEADMINISTRATOR"
+                            Id = "61797990-5498-4852-b809-f53ea8481fce",
+                            ConcurrencyStamp = "69fd5182-a585-4051-98a1-113174ffc47e",
+                            Name = "OfficeAdministrator"
                         },
                         new
                         {
-                            Id = "3",
-                            ConcurrencyStamp = "45cd8882-66a1-4346-9ca1-a3f77f266ff9",
-                            Name = "Employee",
-                            NormalizedName = "EMPLOYEE"
+                            Id = "67de9f89-7d88-41bc-8d03-0ceb70eea9d5",
+                            ConcurrencyStamp = "148b401c-b654-4008-b19d-89e15e497876",
+                            Name = "Employee"
                         });
                 });
 
@@ -221,22 +204,6 @@ namespace ATC_BE.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fdab1936-ae28-4ef0-ad66-5d7a0cd6d7a4",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDURiVOtk8Yl4dvgEtvYQnHN7gE4KOZM5k8RQ35TcKX8rdc/ExVq2Xyjoje4BZYDBg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "f617d753-314e-4b43-ae50-7d0a62a75e60",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@example.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -299,13 +266,6 @@ namespace ATC_BE.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "1"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -36,22 +36,13 @@ namespace ATC_BE.Controllers
                 // This returns a list of roles but the accounts should have just 1 role
                 var userRole = await _userManager.GetRolesAsync(user);
 
-
-                // WIP
                 UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
                 if (userDetails == null)
                     return Unauthorized();
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName), // Email
-                    //new Claim(ClaimTypes.GivenName, userDetails.FirstName),
-                    //new Claim(ClaimTypes.Surname, userDetails.LastName),
-                    //new Claim(ClaimTypes.Role, userRole[0]),
-                    //new Claim(ClaimTypes.Gender, userDetails.Gender),
-                    //new Claim(ClaimTypes.DateOfBirth, userDetails.BirthDate.ToString()),
-                    //new Claim("Nationality", userDetails.Nationality.Value.ToString()),
-                    //new Claim("Status", userDetails.AccountStatus.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -59,17 +50,18 @@ namespace ATC_BE.Controllers
 
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo,
-                    email = user.UserName,
-                    firstName = userDetails.FirstName,
-                    lastName = userDetails.LastName,
-                    role = userRole[0],
-                    gender = userDetails.Gender,
-                    birthDate = userDetails.BirthDate.ToString(),
-                    nationality = userDetails.Nationality.ToString(),
-                    accountStatus = userDetails.AccountStatus.ToString(),
-                    remotePercentage = userDetails.RemotePercentage
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Expiration = token.ValidTo,
+                    AccountId = user.Id,
+                    Email = user.UserName,
+                    FirstName = userDetails.FirstName,
+                    LastName = userDetails.LastName,
+                    Role = userRole[0],
+                    Gender = userDetails.Gender.ToString(),
+                    BirthDate = userDetails.BirthDate.ToString(),
+                    Nationality = userDetails.Nationality.ToString(),
+                    AccountStatus = userDetails.AccountStatus.ToString(),
+                    RemotePercentage = userDetails.RemotePercentage
                 });
             }
             return Unauthorized();
