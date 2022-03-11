@@ -83,8 +83,11 @@ namespace ATC_BE.Data
                 NormalizedName = role.ToString().ToUpper(),
             };
         }
+
         //building
+        public DbSet<BuildingModel> BuildingModels { get; set; }
         //office
+        public DbSet<OfficeModel> OfficeModels { get; set; }
         //desk
     }
 }
