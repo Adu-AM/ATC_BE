@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309212251_SeedingAdminDetails")]
+    partial class SeedingAdminDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,30 +23,6 @@ namespace ATC_BE.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("BuildingAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FloorCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BuildingModels");
-                });
 
             modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
                 {
@@ -137,21 +115,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "1b3b2d56-5867-4550-bc12-505b2fc3acec",
+                            ConcurrencyStamp = "12211fd0-09f0-44c9-904e-dbd46507015c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "91bc374b-9434-4ebd-9de1-dae29bd850d1",
+                            ConcurrencyStamp = "7491af0d-1db4-4082-9fad-05565facc3b5",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "45cd8882-66a1-4346-9ca1-a3f77f266ff9",
+                            ConcurrencyStamp = "338d7f6a-64fa-4696-98fc-9c337b92b1df",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -251,13 +229,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fdab1936-ae28-4ef0-ad66-5d7a0cd6d7a4",
+                            ConcurrencyStamp = "cbc5ad1f-060f-4282-b2f1-d5467c087428",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDURiVOtk8Yl4dvgEtvYQnHN7gE4KOZM5k8RQ35TcKX8rdc/ExVq2Xyjoje4BZYDBg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECx82Kih75g6oBx2Iyqgw3FjKqjrlXG0WiEbfxF+/fVKY5ZT/ioiu6Ut2EWPjJ6n1g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f617d753-314e-4b43-ae50-7d0a62a75e60",
+                            SecurityStamp = "eca74196-2743-404f-8ae8-f3dc533e7494",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         });

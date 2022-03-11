@@ -36,16 +36,13 @@ namespace ATC_BE.Controllers
                 // This returns a list of roles but the accounts should have just 1 role
                 var userRole = await _userManager.GetRolesAsync(user);
 
-
-                // WIP
-                //UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
-                //if (userDetails == null)
-                //    return Unauthorized();
+                UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
+                if (userDetails == null)
+                    return Unauthorized();
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),// Email
-                    new Claim(ClaimTypes.Role, userRole[0]),
+                    new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -53,8 +50,18 @@ namespace ATC_BE.Controllers
 
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Expiration = token.ValidTo,
+                    AccountId = user.Id,
+                    Email = user.UserName,
+                    FirstName = userDetails.FirstName,
+                    LastName = userDetails.LastName,
+                    Role = userRole[0],
+                    Gender = userDetails.Gender.ToString(),
+                    BirthDate = userDetails.BirthDate.ToString(),
+                    Nationality = userDetails.Nationality.ToString(),
+                    AccountStatus = userDetails.AccountStatus.ToString(),
+                    RemotePercentage = userDetails.RemotePercentage
                 });
             }
             return Unauthorized();
