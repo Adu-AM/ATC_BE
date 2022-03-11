@@ -1,5 +1,6 @@
 ﻿using ATC_BE.Data;
 using ATC_BE.Data.Enums;
+using ATC_BE.Helpers;
 using ATC_BE.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -35,9 +36,18 @@ namespace ATC_BE.Controllers
         [Route("register-user")]
         public async Task<IActionResult> RegisterUser(UserRegisterModel registerModel)
         {
+            // Search for user if exists already
             var userExists = await _userManager.FindByNameAsync(registerModel.Email);
-            if(userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+            if (userExists != null)
+                return BadRequest(new Response { Status = "Error", Message = "User already exists" });
+
+            // Validate details
+            if (ValidateUser.ValidateUserDetails(registerModel) == false)
+                return BadRequest(new Response { Status = "Error", Message = "User data is incorrect" });
+
+            // Verify if role exists in Db
+            if (!await _roleManager.RoleExistsAsync(registerModel.Role.ToString()))
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User role doesn't exist" });
 
             IdentityUser user = new()
             {
@@ -45,27 +55,12 @@ namespace ATC_BE.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
 
-            if (!await _roleManager.RoleExistsAsync(registerModel.Role.ToString()))
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User role doesn't exist in Db" });
-            }
-
-            // Storing the "account" in DB
-            var result = await _userManager.CreateAsync(user, registerModel.Password);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-            // Register the role
-            var roleResult = await _userManager.AddToRoleAsync(user, registerModel.Role.ToString());
-            if(!roleResult.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-            // Adding the details of the user in DB
+            // Creating object for the user details table
             UserModel userDetails = new UserModel
             {
                 AccountId = user.Id,
-                FirstName = registerModel.FirstName,
-                LastName = registerModel.LastName,
+                FirstName = NameFormating.UpperCaseFirst(registerModel.FirstName),
+                LastName = NameFormating.UpperCaseFirst(registerModel.LastName),
                 Email = registerModel.Email,
                 Role = registerModel.Role,
                 Gender = registerModel.Gender,
@@ -74,12 +69,22 @@ namespace ATC_BE.Controllers
                 Nationality = registerModel.Nationality
             };
 
+            // Storing the "account" in DB
+            var result = await _userManager.CreateAsync(user, registerModel.Password);
+            if (!result.Succeeded)
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check the password" });
+
+            // Register the role in DB
+            var roleResult = await _userManager.AddToRoleAsync(user, registerModel.Role.ToString());
+            if (!roleResult.Succeeded)
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! There was a problem with the role assigning" });
+            
+            // Save details about the user in DB
             _dbContext.UserDetails.Add(userDetails);
             await _dbContext.SaveChangesAsync();
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
-
 
         [HttpGet]
         [Route("get-user/{email}")]
@@ -87,18 +92,16 @@ namespace ATC_BE.Controllers
         {
             var user = await _dbContext.UserDetails.FindAsync(email);
             if (user == null)
-                return NotFound();
+                return NotFound(new Response { Status = "Error", Message = "User not found" });
 
             return Ok(user);
         }
-
 
         [HttpGet]
         [Route("get-users")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _dbContext.UserDetails.ToListAsync();
-            //var jsonString = JsonSerializer.Serialize(users);
 
             return Ok(users);
         }

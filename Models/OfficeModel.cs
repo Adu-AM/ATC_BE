@@ -1,7 +1,10 @@
-﻿namespace ATC_BE.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ATC_BE.Models
 {
     public class OfficeModel
     {
+        [Key]
         public int OfficeId { get; set; }
         public string BuildingName { get; set; } = String.Empty;
         public int Floor { get; set; }

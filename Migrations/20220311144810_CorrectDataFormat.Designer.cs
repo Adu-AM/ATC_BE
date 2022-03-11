@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220311144810_CorrectDataFormat")]
+    partial class CorrectDataFormat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +99,7 @@ namespace ATC_BE.Migrations
                         .HasColumnType("nvarchar(24)");
 
                     b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -173,21 +175,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "47fb0ef7-5261-4c80-8d1c-beea5639efa8",
+                            ConcurrencyStamp = "87c4f981-bdc5-4550-9c7b-d001f2fafa1c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "08da6fc3-91e2-4580-adb9-3092732df663",
+                            ConcurrencyStamp = "e393862d-b429-4235-962c-36e0b92b1c65",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "acbd572a-4776-4528-bf39-8cd148a856be",
+                            ConcurrencyStamp = "58cc7011-f9e2-402a-aec5-e00a2eea7724",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -287,13 +289,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8109d5e6-319a-4546-83b3-a4db4c568d92",
+                            ConcurrencyStamp = "edddcc1f-e34f-4178-b9ac-aacdfbf5f5c7",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELgvh75S85x4mwhNzBSo5gXVQhFIRdMJ+HKwK6Y9Ompn/85xIeL0pkT4DFcrMI65UA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECVmLSmPpM2c/Rsq07St+neVMsI6/WTsFRCfmLEAHRmdidRyGhEvFE9hBAHjyYExoA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ba0ef7f3-dd71-4882-ad03-a649dc3999ec",
+                            SecurityStamp = "c7687b69-822b-4f5c-a981-b41a93c81300",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         });
