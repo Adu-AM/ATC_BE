@@ -1,5 +1,6 @@
 ﻿using ATC_BE.Data;
 using ATC_BE.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace ATC_BE.Controllers
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             var user = await _userManager.FindByNameAsync(loginModel.Email);
@@ -37,6 +39,7 @@ namespace ATC_BE.Controllers
                 var userRole = await _userManager.GetRolesAsync(user);
 
                 UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
+
                 if (userDetails == null)
                     return Unauthorized();
 
@@ -44,6 +47,7 @@ namespace ATC_BE.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.Role, userRole[0].ToString()),
                 };
 
                 var token = GetToken(authClaims);
@@ -72,9 +76,9 @@ namespace ATC_BE.Controllers
             var authSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
-                _configuration["JWT:Issuer"],
-                _configuration["JWT:Audience"],
-                expires: DateTime.Now.AddMinutes(15),
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                expires: DateTime.Now.AddHours(3),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
                 );

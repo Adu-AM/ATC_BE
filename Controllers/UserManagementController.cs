@@ -2,6 +2,7 @@
 using ATC_BE.Data.Enums;
 using ATC_BE.Helpers;
 using ATC_BE.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,9 +32,9 @@ namespace ATC_BE.Controllers
 
         }
 
-        // autorizare doar admin
         [HttpPost]
         [Route("register-user")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> RegisterUser(UserRegisterModel registerModel)
         {
             // Search for user if exists already
@@ -88,6 +89,7 @@ namespace ATC_BE.Controllers
 
         [HttpGet]
         [Route("get-user/{email}")]
+        [Authorize]
         public async Task<IActionResult> GetUser(string email)
         {
             var user = await _dbContext.UserDetails.FindAsync(email);
@@ -99,6 +101,7 @@ namespace ATC_BE.Controllers
 
         [HttpGet]
         [Route("get-users")]
+        [Authorize]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _dbContext.UserDetails.ToListAsync();
@@ -108,6 +111,7 @@ namespace ATC_BE.Controllers
 
         [HttpPut]
         [Route("update-user")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> UpdateUser(UserModel request)
         {
             try
@@ -146,6 +150,7 @@ namespace ATC_BE.Controllers
 
         [HttpPut]
         [Route("update-activate-user")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> AccountActivate(UserModel request)
         {
             try
@@ -175,6 +180,7 @@ namespace ATC_BE.Controllers
 
         [HttpPut]
         [Route("update-deactivate-user")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> AccountDeactivate(UserModel request)
         {
             try
