@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220312174701_AddedNewDefaultAcc")]
+    partial class AddedNewDefaultAcc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,12 +135,12 @@ namespace ATC_BE.Migrations
                             Email = "admin@example.com",
                             AccountId = "1",
                             AccountStatus = "Active",
-                            BirthDate = new DateTime(1990, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Corina",
-                            Gender = "Female",
-                            LastName = "Popescu",
+                            BirthDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "admin",
+                            Gender = "Other",
+                            LastName = "admin",
                             Nationality = "Romanian",
-                            RemotePercentage = 0,
+                            RemotePercentage = 100,
                             Role = "Administrator"
                         },
                         new
@@ -146,24 +148,24 @@ namespace ATC_BE.Migrations
                             Email = "office@example.com",
                             AccountId = "2",
                             AccountStatus = "Active",
-                            BirthDate = new DateTime(1985, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Matei",
-                            Gender = "Male",
-                            LastName = "Ionescu",
-                            Nationality = "British",
+                            BirthDate = new DateTime(1997, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Mara",
+                            Gender = "Female",
+                            LastName = "Ciun",
+                            Nationality = "Swedish",
                             RemotePercentage = 0,
                             Role = "OfficeAdministrator"
                         },
                         new
                         {
-                            Email = "employee@example.com",
+                            Email = "emp@example.com",
                             AccountId = "3",
                             AccountStatus = "Active",
-                            BirthDate = new DateTime(1995, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Mirela",
-                            Gender = "Female",
-                            LastName = "Pavaliuc",
-                            Nationality = "Romanian",
+                            BirthDate = new DateTime(1995, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Jim",
+                            Gender = "Male",
+                            LastName = "Nim",
+                            Nationality = "British",
                             RemotePercentage = 0,
                             Role = "Employee"
                         });
@@ -199,21 +201,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "4a8d4ed5-a98c-4ce3-8f6e-1902daaa69f6",
+                            ConcurrencyStamp = "dc3be801-6ba8-466d-b1c2-abad42c385f4",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "9dd31667-dd43-40f7-b03a-651d1dca2513",
+                            ConcurrencyStamp = "02c882e2-1e87-45ea-bca0-fde1eae586ef",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "433351a0-9e5a-4d13-bfd4-8c93a23eaed0",
+                            ConcurrencyStamp = "4485fc01-d764-4281-978b-db9d7336425e",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -313,13 +315,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "76455ccc-39bf-45d2-8011-f3dc4edbb413",
+                            ConcurrencyStamp = "818aa683-f807-4dd1-a4ce-65674692c7f4",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKWzgCjo1U3lVIxcQhBV3bVq2lL8RWYyUV+CEmNmpTJGwuTJYVujEnbVHRcYXE/UBA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELWW0CYDP3VyXMfUTGfdWuCbNLQL24kakPGt2I2ph/aRocQE0Y3rwWE26aWRhEmN7w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "506c491d-5069-4514-9455-ebb2d060f965",
+                            SecurityStamp = "bd92adac-cbf4-4ec9-89d3-fca080df7135",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
@@ -327,13 +329,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "763113a2-4c76-4200-89b8-1e14296ce384",
+                            ConcurrencyStamp = "c657da59-88c6-4d14-a41f-125ed46cb710",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "OFFICE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENP3xz8mEQb6Kuu1z54m5c3ctdOK0NKNdNWNv6PK8ugzkBYT4ZsUSrvO9UStkaQv6Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPDC4B0/HhIIxsfNXBwg5lTvTeg6pxq8lYEiFsEfRshtXrx5qPw5JT96bobkuWivHA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6e13fc14-6d80-4eb2-ba9b-def2b583e914",
+                            SecurityStamp = "f54e1502-7d19-4fff-bf4e-23db458f0a45",
                             TwoFactorEnabled = false,
                             UserName = "office@example.com"
                         },
@@ -341,15 +343,15 @@ namespace ATC_BE.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7de5ca19-fa70-4de2-838c-142a2ad71685",
+                            ConcurrencyStamp = "48798ce0-ddcd-468b-b81a-42f6e0cb4a80",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGROVwhBq6X3TIEtMBVXIbxY+u1A/ac6az6XkZTYVNUr3F3Ar7n+hPFMfEOlUCo2TQ==",
+                            NormalizedUserName = "EMP@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAENqOJxuOPhfuYDijwVlhaRrkAV3/BivCx0K/h+GozB7lNDr9sh3ItyYHxD5pRtDmMg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "46ffa960-7d35-4768-8721-1426bb44d356",
+                            SecurityStamp = "770c076a-3c40-40b6-beed-6d5637e71ecc",
                             TwoFactorEnabled = false,
-                            UserName = "employee@example.com"
+                            UserName = "emp@example.com"
                         });
                 });
 
