@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ATC_BE.Controllers
 {
-   /* [Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BuildingController : ControllerBase
     {
@@ -115,5 +115,5 @@ namespace ATC_BE.Controllers
 
         }
 
-    }*/
+    }
 }

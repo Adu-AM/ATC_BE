@@ -13,12 +13,12 @@ namespace ATC_BE.Models
         [Required]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Column(TypeName = "nvarchar(24)")]
-        public Status Vacancy { get; set; } = Status.Occupied;
+        public DeskStatus Vacancy { get; set; } = DeskStatus.Occupied;
         public double Width { get; set; }
         public double Length { get; set; }
 
 
-        public UserModel User { get; set; } 
-        public string User_Id { get; set; } 
+        public UserModel? User { get; set; } 
+        public string? UserEmail { get; set; } 
     }
 }

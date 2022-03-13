@@ -19,9 +19,9 @@ namespace ATC_BE.Models
         public double Width { get; set; }
         public double Length { get; set; }
 
-        //[JsonIgnore]
-        //public BuildingModel Building { get; set; }
-        //[JsonIgnore]
-        //public int Building_Id { get; set; }
+        [JsonIgnore]
+        public BuildingModel Building { get; set; }
+        [JsonIgnore]
+        public int Building_Id { get; set; }
     }
 }

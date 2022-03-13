@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20220308132830_UpdatedTableUserDetailsAndServiceGetall")]
-    partial class UpdatedTableUserDetailsAndServiceGetall
+    [Migration("20220313142319_CleanSlate")]
+    partial class CleanSlate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,104 @@ namespace ATC_BE.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
+                {
+                    b.Property<int>("BuildingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BuildingId"), 1L, 1);
+
+                    b.Property<string>("BuildingAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FloorCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BuildingId");
+
+                    b.ToTable("BuildingModels");
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.DeskModel", b =>
+                {
+                    b.Property<int>("DeskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeskId"), 1L, 1);
+
+                    b.Property<double>("Length")
+                        .HasColumnType("float");
+
+                    b.Property<string>("User_Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Vacancy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(24)");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("DeskId");
+
+                    b.HasIndex("User_Email")
+                        .IsUnique();
+
+                    b.ToTable("DeskModels");
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.OfficeModel", b =>
+                {
+                    b.Property<int>("OfficeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfficeId"), 1L, 1);
+
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BuildingName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Building_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Length")
+                        .HasColumnType("float");
+
+                    b.Property<string>("OfficeAdmin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalDeskCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsableDeskCount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("OfficeId");
+
+                    b.HasIndex("BuildingId");
+
+                    b.ToTable("OfficeModels");
+                });
 
             modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
                 {
@@ -36,10 +134,10 @@ namespace ATC_BE.Migrations
 
                     b.Property<string>("AccountStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -48,7 +146,7 @@ namespace ATC_BE.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -63,11 +161,52 @@ namespace ATC_BE.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(24)");
 
                     b.HasKey("Email");
 
                     b.ToTable("UserDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Email = "admin@example.com",
+                            AccountId = "1",
+                            AccountStatus = "Active",
+                            BirthDate = new DateTime(1990, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Corina",
+                            Gender = "Female",
+                            LastName = "Popescu",
+                            Nationality = "Romanian",
+                            RemotePercentage = 0,
+                            Role = "Administrator"
+                        },
+                        new
+                        {
+                            Email = "office@example.com",
+                            AccountId = "2",
+                            AccountStatus = "Active",
+                            BirthDate = new DateTime(1985, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Matei",
+                            Gender = "Male",
+                            LastName = "Ionescu",
+                            Nationality = "British",
+                            RemotePercentage = 0,
+                            Role = "OfficeAdministrator"
+                        },
+                        new
+                        {
+                            Email = "employee@example.com",
+                            AccountId = "3",
+                            AccountStatus = "Active",
+                            BirthDate = new DateTime(1995, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Mirela",
+                            Gender = "Female",
+                            LastName = "Pavaliuc",
+                            Nationality = "Romanian",
+                            RemotePercentage = 0,
+                            Role = "Employee"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -95,6 +234,29 @@ namespace ATC_BE.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "48ba6f7f-a01a-4cea-8172-395babf7d8f7",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ConcurrencyStamp = "737b7250-fdb3-460d-9511-0332a6a69837",
+                            Name = "OfficeAdministrator",
+                            NormalizedName = "OFFICEADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            ConcurrencyStamp = "3aa66d29-1b24-4f3c-8838-f5eb12831171",
+                            Name = "Employee",
+                            NormalizedName = "EMPLOYEE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -185,6 +347,50 @@ namespace ATC_BE.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "878ccf7d-d616-4a74-aa26-f0bf9abf1040",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIZhbA9HCyegorEAyXO0iap1U//wE7fo+9u/Jxa01LHQnpqmhfbz95Fk5qU3oD0bxg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "274ed537-786d-472a-9bb3-bc4ac4f38d87",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@example.com"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f53170f8-7c07-4656-a812-e4c716967961",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "OFFICE@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAECkBKPjvU3qyVg1PiUB3+vcifUhILSKEwzkitJmNj+RkWiQoTQKljnk9XOO+mPJ4lg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "39457335-32cb-4789-b799-a9a290be061e",
+                            TwoFactorEnabled = false,
+                            UserName = "office@example.com"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "999f51ff-0de0-40ea-993f-716643b428a0",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAELc8q6hmsYhQcSsqv3cFzyEuYHF4IhOL52QyVJw83k75i1WovXLzhQ3aqwcz5sSM5A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d4fb2f0b-3bfa-4b92-8333-66d5a2b9d774",
+                            TwoFactorEnabled = false,
+                            UserName = "employee@example.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -247,6 +453,23 @@ namespace ATC_BE.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            UserId = "3",
+                            RoleId = "3"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -266,6 +489,28 @@ namespace ATC_BE.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.DeskModel", b =>
+                {
+                    b.HasOne("ATC_BE.Models.UserModel", "User")
+                        .WithOne("Desk")
+                        .HasForeignKey("ATC_BE.Models.DeskModel", "User_Email")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.OfficeModel", b =>
+                {
+                    b.HasOne("ATC_BE.Models.BuildingModel", "Building")
+                        .WithMany("OfficeList")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Building");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -316,6 +561,17 @@ namespace ATC_BE.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
+                {
+                    b.Navigation("OfficeList");
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
+                {
+                    b.Navigation("Desk")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -12,6 +12,6 @@ namespace ATC_BE.Models
         [Required]
         public string BuildingAddress { get; set; } = string.Empty;
        
-        ///public List<OfficeModel>? OfficeList { get; set; }
+        public ICollection<OfficeModel> OfficeList { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ATC_BE.Controllers
 {
-    /*[Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OfficeController : ControllerBase
     {
@@ -66,9 +66,8 @@ namespace ATC_BE.Controllers
 
             var newOffice = new OfficeModel()
             {
-                OfficeId = request.OfficeId,
                 BuildingName = request.BuildingName,
-                //Building_Id = building[0].BuildingId,
+                Building_Id = building[0].BuildingId,
                 Floor = request.Floor,
                 TotalDeskCount = request.TotalDeskCount,
                 UsableDeskCount = request.UsableDeskCount,
@@ -124,6 +123,6 @@ namespace ATC_BE.Controllers
 
         }
 
-    }*/
+    }
 }
 

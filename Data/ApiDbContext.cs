@@ -8,7 +8,20 @@ namespace ATC_BE.Data
 {
     public class ApiDbContext: IdentityDbContext<IdentityUser>
     {
-        public ApiDbContext(DbContextOptions<ApiDbContext> options): base(options)
+        // Users
+        public DbSet<UserModel> UserDetails { get; set; }
+        // Building
+        public DbSet<BuildingModel> BuildingModels { get; set; }
+
+        // Office
+        public DbSet<OfficeModel> OfficeModels { get; set; }
+
+        // Desk
+        public DbSet<DeskModel> DeskModels { get; set; }
+
+
+
+        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
         {
 
         }
@@ -29,10 +42,10 @@ namespace ATC_BE.Data
             builder.Entity<UserModel>()
                 .HasOne(a => a.Desk)
                 .WithOne(b => b.User)
-                .HasForeignKey<DeskModel>(b => b.User_Id);
+                .HasForeignKey<DeskModel>(b => b.UserEmail);
         }
 
-        public DbSet<UserModel> UserDetails { get; set; }
+     
 
         private void InitializeRoles(ModelBuilder builder)
         {
@@ -153,14 +166,6 @@ namespace ATC_BE.Data
         }
    
 
-        //building
-       // public DbSet<BuildingModel> BuildingModels { get; set; }
-
-        //office
-        //public DbSet<OfficeModel> OfficeModels { get; set; }
         
-        //desk
-        public DbSet<DeskModel> DeskModels { get; set; }
-       
     }
 }
