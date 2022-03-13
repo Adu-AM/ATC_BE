@@ -11,6 +11,7 @@ namespace ATC_BE.Models
         public int FloorCount { get; set; }
         [Required]
         public string BuildingAddress { get; set; } = string.Empty;
-        public List<OfficeModel>? OfficeList { get; set; }
+       
+        ///public List<OfficeModel>? OfficeList { get; set; }
     }
 }

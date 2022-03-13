@@ -154,10 +154,10 @@ namespace ATC_BE.Data
    
 
         //building
-        public DbSet<BuildingModel> BuildingModels { get; set; }
+       // public DbSet<BuildingModel> BuildingModels { get; set; }
 
         //office
-        public DbSet<OfficeModel> OfficeModels { get; set; }
+        //public DbSet<OfficeModel> OfficeModels { get; set; }
         
         //desk
         public DbSet<DeskModel> DeskModels { get; set; }

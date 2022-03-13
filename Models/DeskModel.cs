@@ -19,7 +19,6 @@ namespace ATC_BE.Models
 
 
         public UserModel User { get; set; } 
-        [ForeignKey("UserId")]
         public string User_Id { get; set; } 
     }
 }

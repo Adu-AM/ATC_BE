@@ -17,7 +17,7 @@ namespace ATC_BE.Controllers
         {
             this.apiDbContext = apiDbContext;
         }
-        [HttpGet]
+        /*[HttpGet]
         [Route("get-offices")]
         public async Task<ActionResult<List<DeskModel>>> Get()
         {
@@ -85,7 +85,7 @@ namespace ATC_BE.Controllers
             return Ok(await apiDbContext.DeskModels.ToListAsync());
 
         }
-        */
+        
         [HttpPut]
         [Route("update-office")]
         public async Task<ActionResult<List<DeskModel>>> UpdateDesk(DeskModel request)
@@ -121,7 +121,7 @@ namespace ATC_BE.Controllers
             return Ok(await apiDbContext.DeskModels.ToListAsync());
 
         }
-
+        */
     }
 }
 
