@@ -23,7 +23,6 @@ namespace ATC_BE.Data
             InitializeOfficeAdmin(builder);
             InitializeEmployee(builder);
 
-
             InitializeAccountRole(builder, "1", "1");
             InitializeAccountRole(builder, "2", "2");
             InitializeAccountRole(builder, "3", "3");
@@ -53,20 +52,18 @@ namespace ATC_BE.Data
 
             builder.Entity<IdentityUser>().HasData(user);
 
-            string admin = "admin";
-
             builder.Entity<UserModel>().HasData(new UserModel
             {
                 AccountId = "1",
-                FirstName = admin,
-                LastName = admin,
+                FirstName = "Corina",
+                LastName = "Popescu",
                 Email = "admin@example.com",
-                Role = 0,
-                Gender = Gender.Other,
-                BirthDate = new DateTime(2022, 1, 1),
+                Role = UserRole.Administrator,
+                Gender = Gender.Female,
+                BirthDate = new DateTime(1990, 1, 5),
                 AccountStatus = AccountStatus.Active,
                 Nationality = Nationality.Romanian,
-                RemotePercentage = 100
+                RemotePercentage = 0
             });
         }
 
@@ -82,21 +79,21 @@ namespace ATC_BE.Data
             };
 
             PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
-            user.PasswordHash = ph.HashPassword(user, "string");
+            user.PasswordHash = ph.HashPassword(user, "string1");
 
             builder.Entity<IdentityUser>().HasData(user);
 
             builder.Entity<UserModel>().HasData(new UserModel
             {
                 AccountId = "2",
-                FirstName = "Mara",
-                LastName = "Ciun",
+                FirstName = "Matei",
+                LastName = "Ionescu",
                 Email = "office@example.com",
                 Role = UserRole.OfficeAdministrator,
-                Gender = Gender.Female,
-                BirthDate = new DateTime(1997, 2, 13),
+                Gender = Gender.Male,
+                BirthDate = new DateTime(1985, 7, 10),
                 AccountStatus = AccountStatus.Active,
-                Nationality = Nationality.Swedish,
+                Nationality = Nationality.British,
                 RemotePercentage = 0
             });
         }
@@ -107,26 +104,26 @@ namespace ATC_BE.Data
             IdentityUser user = new IdentityUser
             {
                 Id = "3",
-                UserName = "emp@example.com",
-                NormalizedUserName = "EMP@EXAMPLE.COM",
+                UserName = "employee@example.com",
+                NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
             };
 
             PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
-            user.PasswordHash = ph.HashPassword(user, "string");
+            user.PasswordHash = ph.HashPassword(user, "string11");
 
             builder.Entity<IdentityUser>().HasData(user);
 
             builder.Entity<UserModel>().HasData(new UserModel
             {
                 AccountId = "3",
-                FirstName = "Jim",
-                LastName = "Nim",
-                Email = "emp@example.com",
+                FirstName = "Mirela",
+                LastName = "Pavaliuc",
+                Email = "employee@example.com",
                 Role = UserRole.Employee,
-                Gender = Gender.Male,
-                BirthDate = new DateTime(1995, 5, 21),
+                Gender = Gender.Female,
+                BirthDate = new DateTime(1995, 11, 15),
                 AccountStatus = AccountStatus.Active,
-                Nationality = Nationality.British,
+                Nationality = Nationality.Romanian,
                 RemotePercentage = 0
             });
         }
