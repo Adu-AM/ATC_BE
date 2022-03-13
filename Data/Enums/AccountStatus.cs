@@ -2,7 +2,7 @@
 {
     public enum AccountStatus
     {
-        Inactive,
-        Active
+        Active,
+        Inactive
     }
 }
