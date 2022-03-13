@@ -1,5 +1,6 @@
 ﻿using ATC_BE.Data;
 using ATC_BE.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace ATC_BE.Controllers
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             var user = await _userManager.FindByNameAsync(loginModel.Email);
@@ -36,25 +38,34 @@ namespace ATC_BE.Controllers
                 // This returns a list of roles but the accounts should have just 1 role
                 var userRole = await _userManager.GetRolesAsync(user);
 
+                UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
 
-                // WIP
-                //UserModel userDetails = await _dbContext.UserDetails.FindAsync(user.UserName);
-                //if (userDetails == null)
-                //    return Unauthorized();
+                if (userDetails == null)
+                    return Unauthorized();
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),// Email
-                    new Claim(ClaimTypes.Role, userRole[0]),
+                    new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.Role, userRole[0].ToString()),
                 };
 
                 var token = GetToken(authClaims);
 
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Expiration = token.ValidTo,
+                    AccountId = user.Id,
+                    Email = user.UserName,
+                    FirstName = userDetails.FirstName,
+                    LastName = userDetails.LastName,
+                    Role = userRole[0],
+                    Gender = userDetails.Gender.ToString(),
+                    BirthDate = userDetails.BirthDate.ToString(),
+                    Nationality = userDetails.Nationality.ToString(),
+                    AccountStatus = userDetails.AccountStatus.ToString(),
+                    RemotePercentage = userDetails.RemotePercentage
                 });
             }
             return Unauthorized();
@@ -65,9 +76,9 @@ namespace ATC_BE.Controllers
             var authSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
-                _configuration["JWT:Issuer"],
-                _configuration["JWT:Audience"],
-                expires: DateTime.Now.AddMinutes(15),
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                expires: DateTime.Now.AddHours(3),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
                 );

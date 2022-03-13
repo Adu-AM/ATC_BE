@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220313102625_QADefaultAccounts")]
+    partial class QADefaultAccounts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,10 +56,6 @@ namespace ATC_BE.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfficeId"), 1L, 1);
 
-
-                    b.Property<int>("BuildingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("BuildingName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,9 +80,6 @@ namespace ATC_BE.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("OfficeId");
-
-                    b.HasIndex("BuildingId");
-
 
                     b.ToTable("OfficeModels");
                 });
@@ -458,17 +453,6 @@ namespace ATC_BE.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ATC_BE.Models.OfficeModel", b =>
-                {
-                    b.HasOne("ATC_BE.Models.BuildingModel", "Building")
-                        .WithMany("OfficeList")
-                        .HasForeignKey("BuildingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Building");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -518,11 +502,6 @@ namespace ATC_BE.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
-                {
-                    b.Navigation("OfficeList");
                 });
 #pragma warning restore 612, 618
         }

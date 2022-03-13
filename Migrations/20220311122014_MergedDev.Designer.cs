@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220311122014_MergedDev")]
+    partial class MergedDev
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,10 +56,6 @@ namespace ATC_BE.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfficeId"), 1L, 1);
 
-
-                    b.Property<int>("BuildingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("BuildingName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -83,9 +81,6 @@ namespace ATC_BE.Migrations
 
                     b.HasKey("OfficeId");
 
-                    b.HasIndex("BuildingId");
-
-
                     b.ToTable("OfficeModels");
                 });
 
@@ -104,7 +99,7 @@ namespace ATC_BE.Migrations
                         .HasColumnType("nvarchar(24)");
 
                     b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -140,39 +135,13 @@ namespace ATC_BE.Migrations
                             Email = "admin@example.com",
                             AccountId = "1",
                             AccountStatus = "Active",
-                            BirthDate = new DateTime(1990, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Corina",
-                            Gender = "Female",
-                            LastName = "Popescu",
+                            BirthDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "admin",
+                            Gender = "Other",
+                            LastName = "admin",
                             Nationality = "Romanian",
-                            RemotePercentage = 0,
+                            RemotePercentage = 100,
                             Role = "Administrator"
-                        },
-                        new
-                        {
-                            Email = "office@example.com",
-                            AccountId = "2",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(1985, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Matei",
-                            Gender = "Male",
-                            LastName = "Ionescu",
-                            Nationality = "British",
-                            RemotePercentage = 0,
-                            Role = "OfficeAdministrator"
-                        },
-                        new
-                        {
-                            Email = "employee@example.com",
-                            AccountId = "3",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(1995, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Mirela",
-                            Gender = "Female",
-                            LastName = "Pavaliuc",
-                            Nationality = "Romanian",
-                            RemotePercentage = 0,
-                            Role = "Employee"
                         });
                 });
 
@@ -206,21 +175,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "4a8d4ed5-a98c-4ce3-8f6e-1902daaa69f6",
+                            ConcurrencyStamp = "ff2c4a06-8003-406d-982b-6e5a3c7159a8",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "9dd31667-dd43-40f7-b03a-651d1dca2513",
+                            ConcurrencyStamp = "1b804f8e-fa40-4204-b3fd-a88881d19a16",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "433351a0-9e5a-4d13-bfd4-8c93a23eaed0",
+                            ConcurrencyStamp = "29fa0ae0-8728-46eb-b4e0-12b7d0c50113",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -320,43 +289,15 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "76455ccc-39bf-45d2-8011-f3dc4edbb413",
+                            ConcurrencyStamp = "9794417e-6c09-49ce-8ae9-54dfd2d33c17",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKWzgCjo1U3lVIxcQhBV3bVq2lL8RWYyUV+CEmNmpTJGwuTJYVujEnbVHRcYXE/UBA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIwg5faCcyF1Z4VSgEELz9lVSM5cLbAybONLpdfOMJaUJvIMUZCr//RIw6NTFpzmNg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "506c491d-5069-4514-9455-ebb2d060f965",
+                            SecurityStamp = "5c315ce1-48e2-41ef-a42f-cdc9d8d2c9bd",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "763113a2-4c76-4200-89b8-1e14296ce384",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "OFFICE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENP3xz8mEQb6Kuu1z54m5c3ctdOK0NKNdNWNv6PK8ugzkBYT4ZsUSrvO9UStkaQv6Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "6e13fc14-6d80-4eb2-ba9b-def2b583e914",
-                            TwoFactorEnabled = false,
-                            UserName = "office@example.com"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "7de5ca19-fa70-4de2-838c-142a2ad71685",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGROVwhBq6X3TIEtMBVXIbxY+u1A/ac6az6XkZTYVNUr3F3Ar7n+hPFMfEOlUCo2TQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "46ffa960-7d35-4768-8721-1426bb44d356",
-                            TwoFactorEnabled = false,
-                            UserName = "employee@example.com"
                         });
                 });
 
@@ -426,16 +367,6 @@ namespace ATC_BE.Migrations
                         {
                             UserId = "1",
                             RoleId = "1"
-                        },
-                        new
-                        {
-                            UserId = "2",
-                            RoleId = "2"
-                        },
-                        new
-                        {
-                            UserId = "3",
-                            RoleId = "3"
                         });
                 });
 
@@ -456,17 +387,6 @@ namespace ATC_BE.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ATC_BE.Models.OfficeModel", b =>
-                {
-                    b.HasOne("ATC_BE.Models.BuildingModel", "Building")
-                        .WithMany("OfficeList")
-                        .HasForeignKey("BuildingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Building");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -518,11 +438,6 @@ namespace ATC_BE.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
-                {
-                    b.Navigation("OfficeList");
                 });
 #pragma warning restore 612, 618
         }

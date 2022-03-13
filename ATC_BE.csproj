@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Configurations\" />
+    <Folder Include="Data\DefaultData\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

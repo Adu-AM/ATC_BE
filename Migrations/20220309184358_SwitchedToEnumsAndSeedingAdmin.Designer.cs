@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309184358_SwitchedToEnumsAndSeedingAdmin")]
+    partial class SwitchedToEnumsAndSeedingAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,73 +23,6 @@ namespace ATC_BE.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
-                {
-                    b.Property<int>("BuildingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BuildingId"), 1L, 1);
-
-                    b.Property<string>("BuildingAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FloorCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BuildingId");
-
-                    b.ToTable("BuildingModels");
-                });
-
-            modelBuilder.Entity("ATC_BE.Models.OfficeModel", b =>
-                {
-                    b.Property<int>("OfficeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfficeId"), 1L, 1);
-
-
-                    b.Property<int>("BuildingId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BuildingName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Floor")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Length")
-                        .HasColumnType("float");
-
-                    b.Property<string>("OfficeAdmin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalDeskCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsableDeskCount")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Width")
-                        .HasColumnType("float");
-
-                    b.HasKey("OfficeId");
-
-                    b.HasIndex("BuildingId");
-
-
-                    b.ToTable("OfficeModels");
-                });
 
             modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
                 {
@@ -104,7 +39,7 @@ namespace ATC_BE.Migrations
                         .HasColumnType("nvarchar(24)");
 
                     b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -133,47 +68,6 @@ namespace ATC_BE.Migrations
                     b.HasKey("Email");
 
                     b.ToTable("UserDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "admin@example.com",
-                            AccountId = "1",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(1990, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Corina",
-                            Gender = "Female",
-                            LastName = "Popescu",
-                            Nationality = "Romanian",
-                            RemotePercentage = 0,
-                            Role = "Administrator"
-                        },
-                        new
-                        {
-                            Email = "office@example.com",
-                            AccountId = "2",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(1985, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Matei",
-                            Gender = "Male",
-                            LastName = "Ionescu",
-                            Nationality = "British",
-                            RemotePercentage = 0,
-                            Role = "OfficeAdministrator"
-                        },
-                        new
-                        {
-                            Email = "employee@example.com",
-                            AccountId = "3",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(1995, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Mirela",
-                            Gender = "Female",
-                            LastName = "Pavaliuc",
-                            Nationality = "Romanian",
-                            RemotePercentage = 0,
-                            Role = "Employee"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -205,24 +99,21 @@ namespace ATC_BE.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            ConcurrencyStamp = "4a8d4ed5-a98c-4ce3-8f6e-1902daaa69f6",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
+                            Id = "2f0249a8-6966-49a8-8746-0dc57179d2b0",
+                            ConcurrencyStamp = "613b151a-56f7-4893-834d-a0724b1601c1",
+                            Name = "Administrator"
                         },
                         new
                         {
-                            Id = "2",
-                            ConcurrencyStamp = "9dd31667-dd43-40f7-b03a-651d1dca2513",
-                            Name = "OfficeAdministrator",
-                            NormalizedName = "OFFICEADMINISTRATOR"
+                            Id = "4df84a4f-5426-4545-ae56-925bed835d7e",
+                            ConcurrencyStamp = "dbcdb413-57ea-4836-b9aa-277d32137126",
+                            Name = "OfficeAdministrator"
                         },
                         new
                         {
-                            Id = "3",
-                            ConcurrencyStamp = "433351a0-9e5a-4d13-bfd4-8c93a23eaed0",
-                            Name = "Employee",
-                            NormalizedName = "EMPLOYEE"
+                            Id = "1fb15b46-dd16-4c20-bb89-4bfac295fc6c",
+                            ConcurrencyStamp = "66166c35-c807-4139-be0c-985ad4b82a8e",
+                            Name = "Employee"
                         });
                 });
 
@@ -318,45 +209,16 @@ namespace ATC_BE.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "6c7ca65a-b9cc-42ed-a74d-c4f875fad672",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "76455ccc-39bf-45d2-8011-f3dc4edbb413",
+                            ConcurrencyStamp = "dea4964e-d0c7-4479-bf10-b39fa27eb93d",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKWzgCjo1U3lVIxcQhBV3bVq2lL8RWYyUV+CEmNmpTJGwuTJYVujEnbVHRcYXE/UBA==",
+                            PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "506c491d-5069-4514-9455-ebb2d060f965",
+                            SecurityStamp = "c19551aa-4a1d-4b82-a56c-00e6d5fd2388",
                             TwoFactorEnabled = false,
-                            UserName = "admin@example.com"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "763113a2-4c76-4200-89b8-1e14296ce384",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "OFFICE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENP3xz8mEQb6Kuu1z54m5c3ctdOK0NKNdNWNv6PK8ugzkBYT4ZsUSrvO9UStkaQv6Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "6e13fc14-6d80-4eb2-ba9b-def2b583e914",
-                            TwoFactorEnabled = false,
-                            UserName = "office@example.com"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "7de5ca19-fa70-4de2-838c-142a2ad71685",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGROVwhBq6X3TIEtMBVXIbxY+u1A/ac6az6XkZTYVNUr3F3Ar7n+hPFMfEOlUCo2TQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "46ffa960-7d35-4768-8721-1426bb44d356",
-                            TwoFactorEnabled = false,
-                            UserName = "employee@example.com"
+                            UserName = "admin"
                         });
                 });
 
@@ -420,23 +282,6 @@ namespace ATC_BE.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            UserId = "2",
-                            RoleId = "2"
-                        },
-                        new
-                        {
-                            UserId = "3",
-                            RoleId = "3"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -456,17 +301,6 @@ namespace ATC_BE.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ATC_BE.Models.OfficeModel", b =>
-                {
-                    b.HasOne("ATC_BE.Models.BuildingModel", "Building")
-                        .WithMany("OfficeList")
-                        .HasForeignKey("BuildingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Building");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -518,11 +352,6 @@ namespace ATC_BE.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
-                {
-                    b.Navigation("OfficeList");
                 });
 #pragma warning restore 612, 618
         }
