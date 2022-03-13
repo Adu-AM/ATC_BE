@@ -22,6 +22,6 @@ namespace ATC_BE.Models
         [JsonIgnore]
         public BuildingModel Building { get; set; }
         [JsonIgnore]
-        public int BuildingId { get; set; }
+        public int Building_Id { get; set; }
     }
 }

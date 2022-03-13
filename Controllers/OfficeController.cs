@@ -44,7 +44,7 @@ namespace ATC_BE.Controllers
         public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByBuildingId(int id)
         {
             var offices = await apiDbContext.OfficeModels
-                .Where(c=> c.BuildingId == id).ToListAsync();
+                .Where(c=> c.Building_Id == id).ToListAsync();
             if (offices == null)
             {
                 return NotFound("Office not found");
@@ -68,7 +68,7 @@ namespace ATC_BE.Controllers
             {
                 OfficeId = request.OfficeId,
                 BuildingName = request.BuildingName,
-                BuildingId = building[0].BuildingId,
+                Building_Id = building[0].BuildingId,
                 Floor = request.Floor,
                 TotalDeskCount = request.TotalDeskCount,
                 UsableDeskCount = request.UsableDeskCount,

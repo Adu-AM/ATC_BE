@@ -16,5 +16,10 @@ namespace ATC_BE.Models
         public Status Vacancy { get; set; } = Status.Occupied;
         public double Width { get; set; }
         public double Length { get; set; }
+
+
+        public UserModel User { get; set; } 
+        [ForeignKey("UserId")]
+        public string User_Id { get; set; } 
     }
 }

@@ -12,7 +12,6 @@ namespace ATC_BE.Data
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -26,6 +25,11 @@ namespace ATC_BE.Data
             InitializeAccountRole(builder, "1", "1");
             InitializeAccountRole(builder, "2", "2");
             InitializeAccountRole(builder, "3", "3");
+
+            builder.Entity<UserModel>()
+                .HasOne(a => a.Desk)
+                .WithOne(b => b.User)
+                .HasForeignKey<DeskModel>(b => b.User_Id);
         }
 
         public DbSet<UserModel> UserDetails { get; set; }
@@ -147,12 +151,16 @@ namespace ATC_BE.Data
                 NormalizedName = role.ToString().ToUpper(),
             };
         }
+   
 
         //building
         public DbSet<BuildingModel> BuildingModels { get; set; }
+
         //office
         public DbSet<OfficeModel> OfficeModels { get; set; }
+        
         //desk
         public DbSet<DeskModel> DeskModels { get; set; }
+       
     }
 }
