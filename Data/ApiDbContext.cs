@@ -25,5 +25,6 @@ namespace ATC_BE.Data
         //office
         public DbSet<OfficeModel> OfficeModels { get; set; }
         //desk
+        public DbSet<DeskModel> DeskModels { get; set; }
     }
 }

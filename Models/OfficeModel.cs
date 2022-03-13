@@ -16,7 +16,7 @@ namespace ATC_BE.Models
         [Required]
         public int UsableDeskCount { get; set; }
         public string OfficeAdmin { get; set; } = String.Empty;
-        public double  Width { get; set; }
+        public double Width { get; set; }
         public double Length { get; set; }
 
         [JsonIgnore]
