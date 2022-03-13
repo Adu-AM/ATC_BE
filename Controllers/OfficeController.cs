@@ -40,12 +40,17 @@ namespace ATC_BE.Controllers
 
         }
         [HttpGet]
-        [Route("get-offices-by-building-id{id}")]
-        public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByBuildingId(int id)
+        [Route("get-offices-by-building-name{name}")]
+        public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByBuildingId(string name)
         {
+            var building = await apiDbContext.BuildingModels
+                .Where(x => x.Name == name).ToListAsync();
+            if (building.Count == 0)
+                return NotFound("Building not found");
+
             var offices = await apiDbContext.OfficeModels
-                .Where(c=> c.Building_Id == id).ToListAsync();
-            if (offices == null)
+                .Where(c=> c.BuildingName == name).ToListAsync();
+            if (offices.Count == 0)
             {
                 return NotFound("Office not found");
             }
@@ -61,13 +66,13 @@ namespace ATC_BE.Controllers
             var building = await apiDbContext.BuildingModels
                 .Where(c => c.Name == request.BuildingName).ToListAsync();
        
-            if (building == null)
-                return NotFound();
+            if (building.Count == 0)
+                return NotFound("Building not found");
 
             var newOffice = new OfficeModel()
             {
                 BuildingName = request.BuildingName,
-                Building_Id = building[0].BuildingId,
+                BuildingId = building.ElementAt(0).BuildingId,
                 Floor = request.Floor,
                 TotalDeskCount = request.TotalDeskCount,
                 UsableDeskCount = request.UsableDeskCount,
@@ -81,6 +86,7 @@ namespace ATC_BE.Controllers
             await apiDbContext.SaveChangesAsync();
 
             return Ok(await apiDbContext.OfficeModels.ToListAsync());
+           // return Ok(newOffice);
 
         }
         [HttpPut]

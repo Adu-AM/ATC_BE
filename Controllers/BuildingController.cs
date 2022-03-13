@@ -43,7 +43,7 @@ namespace ATC_BE.Controllers
         {
             var building =await apiDbContext.BuildingModels
                 .Where( x => x.Name == name).ToListAsync();
-            if(building == null)
+            if(building.Count == 0)
             {
                 return NotFound("Building not found");
             }
@@ -102,16 +102,28 @@ namespace ATC_BE.Controllers
         [Route("delete-building{name}")]
         public async Task<ActionResult<List<BuildingModel>>> DeleteOneBuildingByID(string name)
         {
-            var dbBuilding = await apiDbContext.BuildingModels.Where(x => x.Name == name).ToListAsync();
-            if (dbBuilding == null)
+            try
             {
+                var dbBuilding = await apiDbContext.BuildingModels.Where(x => x.Name == name).ToListAsync();
+                if (dbBuilding == null)
+                {
+                    return NotFound("Building not found");
+                }
+                apiDbContext.BuildingModels.Remove(dbBuilding.ElementAt(0));
+
+                await apiDbContext.SaveChangesAsync();
+
+                return Ok(await apiDbContext.BuildingModels.ToListAsync());
+            }
+            catch (Exception)
+            {
+
                 return NotFound("Building not found");
             }
-            apiDbContext.BuildingModels.Remove(dbBuilding.ElementAt(0));
-            
-            await apiDbContext.SaveChangesAsync();
+           
 
-            return Ok(await apiDbContext.BuildingModels.ToListAsync());
+            
+           
 
         }
 

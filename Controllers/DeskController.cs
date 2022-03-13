@@ -21,9 +21,12 @@ namespace ATC_BE.Controllers
         [Route("get-desks")]
         public async Task<ActionResult<List<DeskModel>>> Get()
         {
+            var desks = await apiDbContext.DeskModels.ToListAsync();
 
+            if(desks.Count == 0)
+                return NotFound();  
 
-            return Ok(await apiDbContext.DeskModels.ToListAsync());
+            return Ok(desks);
 
         }
 
@@ -42,15 +45,17 @@ namespace ATC_BE.Controllers
         }
      
         [HttpGet]
-        [Route("get-desk-by-user-id{email}")]
+        [Route("get-desk-by-user-email{email}")]
         public async Task<ActionResult<List<DeskModel>>> GetOneDesksByUserEmail(string email)
         {
-            var desk = await apiDbContext.DeskModels.FindAsync(email);
+           var desk = await apiDbContext.DeskModels
+                .Where(x=> x.UserEmail == email).ToListAsync();
 
-            if (desk == null)
+            if (desk.Count == 0)
             {
                 return NotFound("Desk not found");
             }
+
 
             return Ok(desk);
         }
@@ -65,6 +70,12 @@ namespace ATC_BE.Controllers
 
             if (user == null)
                 return NotFound();
+            var office = await apiDbContext.OfficeModels.FindAsync(request.OfficeId);
+
+            if (office == null)
+            {
+                return NotFound("Office not found");
+            }
 
             var newDesk = new DeskModel()
             {
@@ -72,7 +83,19 @@ namespace ATC_BE.Controllers
                 Width = request.Width, 
                 Length = request.Length,
                 UserEmail = request.UserEmail,
+                OfficeId = office.OfficeId,
             };
+
+            if (newDesk.Vacancy == Data.Enums.DeskStatus.Occupied)
+            {
+                if (newDesk.UserEmail == null)
+                    return BadRequest("Email not given");
+            }
+            else
+            {
+                if (newDesk.UserEmail != null)
+                    return BadRequest("why u giv email");
+            }
 
             apiDbContext.DeskModels.Add(newDesk);
             await apiDbContext.SaveChangesAsync();
@@ -91,9 +114,11 @@ namespace ATC_BE.Controllers
                 return NotFound("Desk not found");
             }
 
-            dbDesk.DeskId = request.DeskId;
             dbDesk.Width = request.Width;
             dbDesk.Length = request.Length;
+            dbDesk.UserEmail = request.UserEmail;
+            dbDesk.OfficeId = request.OfficeId;
+            dbDesk.Vacancy = request.Vacancy;
 
             await apiDbContext.SaveChangesAsync();
 

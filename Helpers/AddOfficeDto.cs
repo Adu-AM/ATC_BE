@@ -2,7 +2,6 @@
 {
     public class AddOfficeDto
     {
-        public int OfficeId { get; set; } = 0;
         public string BuildingName { get; set; } = String.Empty;   
 
         public int Floor { get; set; } = 0;

@@ -225,17 +225,22 @@ namespace ATC_BE.Migrations
                     Vacancy = table.Column<string>(type: "nvarchar(24)", nullable: false),
                     Width = table.Column<double>(type: "float", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
-                    User_Email = table.Column<string>(type: "nvarchar(100)", nullable: false)
+                    UserEmail = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    OfficeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeskModels", x => x.DeskId);
                     table.ForeignKey(
-                        name: "FK_DeskModels_UserDetails_User_Email",
-                        column: x => x.User_Email,
+                        name: "FK_DeskModels_OfficeModels_OfficeId",
+                        column: x => x.OfficeId,
+                        principalTable: "OfficeModels",
+                        principalColumn: "OfficeId");
+                    table.ForeignKey(
+                        name: "FK_DeskModels_UserDetails_UserEmail",
+                        column: x => x.UserEmail,
                         principalTable: "UserDetails",
-                        principalColumn: "Email",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Email");
                 });
 
             migrationBuilder.InsertData(
@@ -243,9 +248,9 @@ namespace ATC_BE.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "48ba6f7f-a01a-4cea-8172-395babf7d8f7", "Administrator", "ADMINISTRATOR" },
-                    { "2", "737b7250-fdb3-460d-9511-0332a6a69837", "OfficeAdministrator", "OFFICEADMINISTRATOR" },
-                    { "3", "3aa66d29-1b24-4f3c-8838-f5eb12831171", "Employee", "EMPLOYEE" }
+                    { "1", "a5ed8d34-9912-4eb8-9fff-dda432d86c4c", "Administrator", "ADMINISTRATOR" },
+                    { "2", "cf4c1ede-bd9d-43ea-944f-100e33f85237", "OfficeAdministrator", "OFFICEADMINISTRATOR" },
+                    { "3", "801d4760-b112-4df9-b550-ff2263317610", "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.InsertData(
@@ -253,9 +258,9 @@ namespace ATC_BE.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "878ccf7d-d616-4a74-aa26-f0bf9abf1040", null, false, false, null, null, "ADMIN@EXAMPLE.COM", "AQAAAAEAACcQAAAAEIZhbA9HCyegorEAyXO0iap1U//wE7fo+9u/Jxa01LHQnpqmhfbz95Fk5qU3oD0bxg==", null, false, "274ed537-786d-472a-9bb3-bc4ac4f38d87", false, "admin@example.com" },
-                    { "2", 0, "f53170f8-7c07-4656-a812-e4c716967961", null, false, false, null, null, "OFFICE@EXAMPLE.COM", "AQAAAAEAACcQAAAAECkBKPjvU3qyVg1PiUB3+vcifUhILSKEwzkitJmNj+RkWiQoTQKljnk9XOO+mPJ4lg==", null, false, "39457335-32cb-4789-b799-a9a290be061e", false, "office@example.com" },
-                    { "3", 0, "999f51ff-0de0-40ea-993f-716643b428a0", null, false, false, null, null, "EMPLOYEE@EXAMPLE.COM", "AQAAAAEAACcQAAAAELc8q6hmsYhQcSsqv3cFzyEuYHF4IhOL52QyVJw83k75i1WovXLzhQ3aqwcz5sSM5A==", null, false, "d4fb2f0b-3bfa-4b92-8333-66d5a2b9d774", false, "employee@example.com" }
+                    { "1", 0, "8ff38298-0dc0-4651-b026-2d293a3f1d7c", null, false, false, null, null, "ADMIN@EXAMPLE.COM", "AQAAAAEAACcQAAAAEHdj+fALVYkY3Qp5BpjZN2Vj8snl0WiIyChhFG0seLUoO838BFs/aWZRnAKuujE8mw==", null, false, "ce66ff1d-5c9c-4723-8efa-0aec4c407bd3", false, "admin@example.com" },
+                    { "2", 0, "ed424fbc-b15f-48a5-9354-23bd2c9b04e3", null, false, false, null, null, "OFFICE@EXAMPLE.COM", "AQAAAAEAACcQAAAAENZpGLdYVNK/Xxa3+FA1gTRFMeJnNGW1MkBi/mX2SKj9/EeHxxtwxo4CH7ArmFL0Xw==", null, false, "ee977166-52af-45df-bbcb-8e17f97ad5ab", false, "office@example.com" },
+                    { "3", 0, "413e3fa4-31cd-44a9-8c15-2ff32a1b86d6", null, false, false, null, null, "EMPLOYEE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEK7TgOwabaHEON9iU4Dgo929cNs3hkm2S21RAweQ7pBQVlR9WeONf7ZLJ7gQg5ND+g==", null, false, "ed049a6b-3788-43a2-bf55-49d975711a6b", false, "employee@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -323,10 +328,16 @@ namespace ATC_BE.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeskModels_User_Email",
+                name: "IX_DeskModels_OfficeId",
                 table: "DeskModels",
-                column: "User_Email",
-                unique: true);
+                column: "OfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeskModels_UserEmail",
+                table: "DeskModels",
+                column: "UserEmail",
+                unique: true,
+                filter: "[UserEmail] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OfficeModels_BuildingId",
@@ -355,13 +366,13 @@ namespace ATC_BE.Migrations
                 name: "DeskModels");
 
             migrationBuilder.DropTable(
-                name: "OfficeModels");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "OfficeModels");
 
             migrationBuilder.DropTable(
                 name: "UserDetails");

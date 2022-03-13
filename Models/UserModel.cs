@@ -56,6 +56,7 @@ namespace ATC_BE.Models
 
 
         /// Desk Relationships
-        public DeskModel Desk { get; set; }
+        [JsonIgnore]
+        public DeskModel? Desk { get; set; }
     }
 }

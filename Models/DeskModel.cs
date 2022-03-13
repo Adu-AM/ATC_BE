@@ -8,6 +8,7 @@ namespace ATC_BE.Models
     public class DeskModel
     {
         [Key]
+        [Required]
         public int DeskId { get; set; }
 
         [Required]
@@ -17,8 +18,20 @@ namespace ATC_BE.Models
         public double Width { get; set; }
         public double Length { get; set; }
 
+        /// <summary>
+        ///  User relationship
+        /// </summary>
+        [JsonIgnore]
+        public UserModel? User { get; set; } = null;
+        [EmailAddress]
+        public string? UserEmail { get; set; } = null;
 
-        public UserModel? User { get; set; } 
-        public string? UserEmail { get; set; } 
+        /// <summary>
+        /// Office Relationship
+        /// </summary>
+        [JsonIgnore]
+        public OfficeModel? Office { get; set; }
+        [Required]
+        public int OfficeId { get; set; }
     }
 }
