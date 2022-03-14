@@ -1,5 +1,6 @@
 ﻿using ATC_BE.Models;
 using ATC_BE.Data;
+using ATC_BE.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -59,9 +60,15 @@ namespace ATC_BE.Controllers
         /// <returns>List with all old and new buildings</returns>
         [HttpPost]
         [Route("add-buildings")]
-        public async Task<ActionResult<List<BuildingModel>>> AddBuilding(BuildingModel building)
+        public async Task<ActionResult<List<BuildingModel>>> AddBuilding(BuildingDto building)
         {
-            apiDbContext.BuildingModels.Add(building);
+            var newBuilding = new BuildingModel()
+            {
+                Name = building.Name,
+                FloorCount = building.FloorCount,
+                BuildingAddress = building.BuildingAddress,
+            };
+            apiDbContext.BuildingModels.Add(newBuilding);
             await apiDbContext.SaveChangesAsync();
             return Ok(await apiDbContext.BuildingModels.ToListAsync());
 
