@@ -61,7 +61,7 @@ namespace ATC_BE.Controllers
 
         [HttpGet]
         [Route("get-offices-by-floor-in-building{name}/{floor}")]
-        public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByBuildingName(string name, int floor)
+        public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByBuildingNameAndFloor(string name, int floor)
         {
             var building = await apiDbContext.BuildingModels
                 .Where(x => x.Name == name).ToListAsync();
