@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-
 namespace ATC_BE.Models
 {
     public class BuildingModel
@@ -13,7 +11,5 @@ namespace ATC_BE.Models
         public int FloorCount { get; set; }
         [Required]
         public string BuildingAddress { get; set; } = string.Empty;
-        [JsonIgnore]
-        public ICollection<OfficeModel>? OfficeList { get; set; }
     }
 }

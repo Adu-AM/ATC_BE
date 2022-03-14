@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309194724_SeedingRepair6")]
+    partial class SeedingRepair6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,30 +23,6 @@ namespace ATC_BE.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("BuildingAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FloorCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BuildingModels");
-                });
 
             modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
                 {
@@ -90,21 +68,6 @@ namespace ATC_BE.Migrations
                     b.HasKey("Email");
 
                     b.ToTable("UserDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "admin@example.com",
-                            AccountId = "1",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "admin",
-                            Gender = "Other",
-                            LastName = "admin",
-                            Nationality = "Romanian",
-                            RemotePercentage = 100,
-                            Role = "Administrator"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -136,22 +99,22 @@ namespace ATC_BE.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            ConcurrencyStamp = "1b3b2d56-5867-4550-bc12-505b2fc3acec",
+                            Id = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
+                            ConcurrencyStamp = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "2",
-                            ConcurrencyStamp = "91bc374b-9434-4ebd-9de1-dae29bd850d1",
+                            Id = "66634b0a-3d68-45f4-9c7d-2c20549494db",
+                            ConcurrencyStamp = "66634b0a-3d68-45f4-9c7d-2c20549494db",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "3",
-                            ConcurrencyStamp = "45cd8882-66a1-4346-9ca1-a3f77f266ff9",
+                            Id = "d402aa31-f7eb-4b8a-9562-5488626cede8",
+                            ConcurrencyStamp = "d402aa31-f7eb-4b8a-9562-5488626cede8",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -249,15 +212,15 @@ namespace ATC_BE.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fdab1936-ae28-4ef0-ad66-5d7a0cd6d7a4",
+                            ConcurrencyStamp = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDURiVOtk8Yl4dvgEtvYQnHN7gE4KOZM5k8RQ35TcKX8rdc/ExVq2Xyjoje4BZYDBg==",
+                            PasswordHash = "admin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f617d753-314e-4b43-ae50-7d0a62a75e60",
+                            SecurityStamp = "50bfdc91-e65b-4a14-8203-e481e4923e1f",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         });
@@ -323,13 +286,6 @@ namespace ATC_BE.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            RoleId = "1"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

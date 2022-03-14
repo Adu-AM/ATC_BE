@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309210730_SeedingAdmin")]
+    partial class SeedingAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,30 +23,6 @@ namespace ATC_BE.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ATC_BE.Models.BuildingModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("BuildingAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FloorCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BuildingModels");
-                });
 
             modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
                 {
@@ -90,21 +68,6 @@ namespace ATC_BE.Migrations
                     b.HasKey("Email");
 
                     b.ToTable("UserDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "admin@example.com",
-                            AccountId = "1",
-                            AccountStatus = "Active",
-                            BirthDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "admin",
-                            Gender = "Other",
-                            LastName = "admin",
-                            Nationality = "Romanian",
-                            RemotePercentage = 100,
-                            Role = "Administrator"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -137,21 +100,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "1b3b2d56-5867-4550-bc12-505b2fc3acec",
+                            ConcurrencyStamp = "ddb335e0-2598-4381-a5ae-206c1f91220b",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "91bc374b-9434-4ebd-9de1-dae29bd850d1",
+                            ConcurrencyStamp = "46423762-d8f2-40e0-b038-4f48c7763360",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "45cd8882-66a1-4346-9ca1-a3f77f266ff9",
+                            ConcurrencyStamp = "4d0a7030-43c8-448b-89be-8fbf44cf176f",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -251,13 +214,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fdab1936-ae28-4ef0-ad66-5d7a0cd6d7a4",
+                            ConcurrencyStamp = "07dd571e-70f5-40c9-8fb5-8dfe33fc3eac",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDURiVOtk8Yl4dvgEtvYQnHN7gE4KOZM5k8RQ35TcKX8rdc/ExVq2Xyjoje4BZYDBg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGqsaj1eLugaarBdUV65DhqsCc1P8hKQiV020Rh9mCgunHpt2J1AZTHLXAgCah5ePQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f617d753-314e-4b43-ae50-7d0a62a75e60",
+                            SecurityStamp = "478bfbbc-3cf0-47e7-980c-0d4c3c10ef87",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         });
