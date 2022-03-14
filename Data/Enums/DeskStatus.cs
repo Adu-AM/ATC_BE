@@ -2,7 +2,8 @@
 {
     public enum DeskStatus
     {
-        Occupied,
-        Free
+        Free,
+        Pending,
+        Occupied 
     }
 }

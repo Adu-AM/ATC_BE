@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ATC_BE.Migrations
 {
-    public partial class CleanSlate : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -202,8 +202,7 @@ namespace ATC_BE.Migrations
                     OfficeAdmin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Width = table.Column<double>(type: "float", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
-                    BuildingId = table.Column<int>(type: "int", nullable: false),
-                    Building_Id = table.Column<int>(type: "int", nullable: false)
+                    BuildingId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -226,7 +225,7 @@ namespace ATC_BE.Migrations
                     Width = table.Column<double>(type: "float", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
                     UserEmail = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    OfficeId = table.Column<int>(type: "int", nullable: true)
+                    OfficeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,7 +234,8 @@ namespace ATC_BE.Migrations
                         name: "FK_DeskModels_OfficeModels_OfficeId",
                         column: x => x.OfficeId,
                         principalTable: "OfficeModels",
-                        principalColumn: "OfficeId");
+                        principalColumn: "OfficeId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DeskModels_UserDetails_UserEmail",
                         column: x => x.UserEmail,
@@ -248,9 +248,9 @@ namespace ATC_BE.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "a5ed8d34-9912-4eb8-9fff-dda432d86c4c", "Administrator", "ADMINISTRATOR" },
-                    { "2", "cf4c1ede-bd9d-43ea-944f-100e33f85237", "OfficeAdministrator", "OFFICEADMINISTRATOR" },
-                    { "3", "801d4760-b112-4df9-b550-ff2263317610", "Employee", "EMPLOYEE" }
+                    { "1", "0fc5f958-c095-42e6-aeaa-55b880010f56", "Administrator", "ADMINISTRATOR" },
+                    { "2", "1e7d2442-92cf-4722-bb7a-51542bc4429d", "OfficeAdministrator", "OFFICEADMINISTRATOR" },
+                    { "3", "68eb2a42-a1a7-4e2b-83aa-30bdbbb13a30", "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.InsertData(
@@ -258,9 +258,9 @@ namespace ATC_BE.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "8ff38298-0dc0-4651-b026-2d293a3f1d7c", null, false, false, null, null, "ADMIN@EXAMPLE.COM", "AQAAAAEAACcQAAAAEHdj+fALVYkY3Qp5BpjZN2Vj8snl0WiIyChhFG0seLUoO838BFs/aWZRnAKuujE8mw==", null, false, "ce66ff1d-5c9c-4723-8efa-0aec4c407bd3", false, "admin@example.com" },
-                    { "2", 0, "ed424fbc-b15f-48a5-9354-23bd2c9b04e3", null, false, false, null, null, "OFFICE@EXAMPLE.COM", "AQAAAAEAACcQAAAAENZpGLdYVNK/Xxa3+FA1gTRFMeJnNGW1MkBi/mX2SKj9/EeHxxtwxo4CH7ArmFL0Xw==", null, false, "ee977166-52af-45df-bbcb-8e17f97ad5ab", false, "office@example.com" },
-                    { "3", 0, "413e3fa4-31cd-44a9-8c15-2ff32a1b86d6", null, false, false, null, null, "EMPLOYEE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEK7TgOwabaHEON9iU4Dgo929cNs3hkm2S21RAweQ7pBQVlR9WeONf7ZLJ7gQg5ND+g==", null, false, "ed049a6b-3788-43a2-bf55-49d975711a6b", false, "employee@example.com" }
+                    { "1", 0, "1f2412ac-f1f1-4f52-ab2f-c0c3e4ebca32", null, false, false, null, null, "ADMIN@EXAMPLE.COM", "AQAAAAEAACcQAAAAEB0ccpGkEQ5ufjlQnZK4NTNkAlKX8fAhqGNlMgTpn8kLt8oIkzbt7u/PvaDwNrjtag==", null, false, "39c6e7a0-3bc1-414e-a133-974eb76ad4a9", false, "admin@example.com" },
+                    { "2", 0, "292a3cc3-5967-4182-a585-cc94dce18856", null, false, false, null, null, "OFFICE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEND5ZRuUqidzJcO17qpIdnji6aBzQvEXHCYknuyj35c1fhrFOkq7HbsGjui1jrA7vg==", null, false, "ffaca3be-ed80-466e-a791-e3b1bfe2aa23", false, "office@example.com" },
+                    { "3", 0, "9807f807-603f-419d-a9ea-553ac8d77959", null, false, false, null, null, "EMPLOYEE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEAdWoZ5B4lI9V2Em+Awtua0fFEXk9X7MMxYa/pOfG35H/mIRTVUF5xT2l5FD0B6/gA==", null, false, "2333d18a-46cc-48ff-ba48-f9537e8c82b7", false, "employee@example.com" }
                 });
 
             migrationBuilder.InsertData(
