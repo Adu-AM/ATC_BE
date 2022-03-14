@@ -149,13 +149,13 @@ namespace ATC_BE.Controllers
 
 
         [HttpPut]
-        [Route("update-activate-user")]
+        [Route("update-activate-user/{email}")]
         //[Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> AccountActivate(UserModel request)
+        public async Task<IActionResult> AccountActivate(string email)
         {
             try
             {
-                var user = await _dbContext.UserDetails.FindAsync(request.Email);
+                var user = await _dbContext.UserDetails.FindAsync(email);
                 if(user == null)
                     return NotFound(new Response { Status = "Error", Message = "User not found" });
 
@@ -179,13 +179,13 @@ namespace ATC_BE.Controllers
         }
 
         [HttpPut]
-        [Route("update-deactivate-user")]
+        [Route("update-deactivate-user/{email}")]
         //[Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> AccountDeactivate(UserModel request)
+        public async Task<IActionResult> AccountDeactivate(string email)
         {
             try
             {
-                var user = await _dbContext.UserDetails.FindAsync(request.Email);
+                var user = await _dbContext.UserDetails.FindAsync(email);
                 if (user == null)
                     return NotFound(new Response { Status = "Error", Message = "User not found" });
 
