@@ -1,6 +1,6 @@
 ﻿using ATC_BE.Data;
+using ATC_BE.Helpers;
 using ATC_BE.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +17,7 @@ namespace ATC_BE.Controllers
             this.apiDbContext = apiDbContext;
         }
         [HttpGet]
+        [Route("get-offices")]
         public async Task<ActionResult<List<OfficeModel>>> Get()
         {
 
@@ -25,7 +26,8 @@ namespace ATC_BE.Controllers
 
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("get-office-by-id{id}")]
         public async Task<ActionResult<OfficeModel>> GetOneOfficeByID(int id)
         {
             var office = await apiDbContext.OfficeModels.FindAsync(id);
@@ -37,16 +39,58 @@ namespace ATC_BE.Controllers
             return Ok(office);
 
         }
+        [HttpGet]
+        [Route("get-offices-by-building-name{name}")]
+        public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByBuildingId(string name)
+        {
+            var building = await apiDbContext.BuildingModels
+                .Where(x => x.Name == name).ToListAsync();
+            if (building.Count == 0)
+                return NotFound("Building not found");
+
+            var offices = await apiDbContext.OfficeModels
+                .Where(c=> c.BuildingName == name).ToListAsync();
+            if (offices.Count == 0)
+            {
+                return NotFound("Office not found");
+            }
+
+            return Ok(offices);
+
+        }
 
         [HttpPost]
-        public async Task<ActionResult<List<OfficeModel>>> AddOffice(OfficeModel Office)
+        [Route("add-office")]
+        public async Task<ActionResult<List<OfficeModel>>> AddOffice(AddOfficeDto request)
         {
-            apiDbContext.OfficeModels.Add(Office);
+            var building = await apiDbContext.BuildingModels
+                .Where(c => c.Name == request.BuildingName).ToListAsync();
+       
+            if (building.Count == 0)
+                return NotFound("Building not found");
+
+            var newOffice = new OfficeModel()
+            {
+                BuildingName = request.BuildingName,
+                BuildingId = building.ElementAt(0).BuildingId,
+                Floor = request.Floor,
+                TotalDeskCount = request.TotalDeskCount,
+                UsableDeskCount = request.UsableDeskCount,
+                OfficeAdmin = request.OfficeAdmin,
+                Width = request.Width,
+                Length = request.Length,
+
+            };
+
+            apiDbContext.OfficeModels.Add(newOffice);
             await apiDbContext.SaveChangesAsync();
+
             return Ok(await apiDbContext.OfficeModels.ToListAsync());
+           // return Ok(newOffice);
 
         }
         [HttpPut]
+        [Route("update-office")]
         public async Task<ActionResult<List<OfficeModel>>> UpdateOffice(OfficeModel request)
         {
             var dbOffice = await apiDbContext.OfficeModels.FindAsync(request.OfficeId);
@@ -69,7 +113,8 @@ namespace ATC_BE.Controllers
 
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("delete-office-by-id{id}")]
         public async Task<ActionResult<List<OfficeModel>>> DeleteOneOfficeByID(int id)
         {
             var dbOffice = await apiDbContext.OfficeModels.FindAsync(id);

@@ -8,21 +8,44 @@ namespace ATC_BE.Data
 {
     public class ApiDbContext: IdentityDbContext<IdentityUser>
     {
-        public ApiDbContext(DbContextOptions<ApiDbContext> options): base(options)
+        // Users
+        public DbSet<UserModel> UserDetails { get; set; }
+        // Building
+        public DbSet<BuildingModel> BuildingModels { get; set; }
+
+        // Office
+        public DbSet<OfficeModel> OfficeModels { get; set; }
+
+        // Desk
+        public DbSet<DeskModel> DeskModels { get; set; }
+
+
+
+        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             InitializeRoles(builder);
+
             InitializeAdmin(builder);
-            InitializeAdminRole(builder, "1", "1");
+            InitializeOfficeAdmin(builder);
+            InitializeEmployee(builder);
+
+            InitializeAccountRole(builder, "1", "1");
+            InitializeAccountRole(builder, "2", "2");
+            InitializeAccountRole(builder, "3", "3");
+
+            builder.Entity<UserModel>()
+                .HasOne(a => a.Desk)
+                .WithOne(b => b.User)
+                .HasForeignKey<DeskModel>(b => b.UserEmail);
         }
 
-        public DbSet<UserModel> UserDetails { get; set; }
+     
 
         private void InitializeRoles(ModelBuilder builder)
         {
@@ -46,25 +69,83 @@ namespace ATC_BE.Data
 
             builder.Entity<IdentityUser>().HasData(user);
 
-            string admin = "admin";
-
             builder.Entity<UserModel>().HasData(new UserModel
             {
                 AccountId = "1",
-                FirstName = admin,
-                LastName = admin,
+                FirstName = "Corina",
+                LastName = "Popescu",
                 Email = "admin@example.com",
-                Role = 0,
-                Gender = Gender.Other,
-                BirthDate = new DateTime(2022, 1, 1),
+                Role = UserRole.Administrator,
+                Gender = Gender.Female,
+                BirthDate = new DateTime(1990, 1, 5),
                 AccountStatus = AccountStatus.Active,
                 Nationality = Nationality.Romanian,
-                RemotePercentage = 100
+                RemotePercentage = 0
             });
-
         }
 
-        private void InitializeAdminRole(ModelBuilder builder, string userID, string roleId)
+
+        private void InitializeOfficeAdmin(ModelBuilder builder)
+        {
+
+            IdentityUser user = new IdentityUser
+            {
+                Id = "2",
+                UserName = "office@example.com",
+                NormalizedUserName = "OFFICE@EXAMPLE.COM",
+            };
+
+            PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
+            user.PasswordHash = ph.HashPassword(user, "string1");
+
+            builder.Entity<IdentityUser>().HasData(user);
+
+            builder.Entity<UserModel>().HasData(new UserModel
+            {
+                AccountId = "2",
+                FirstName = "Matei",
+                LastName = "Ionescu",
+                Email = "office@example.com",
+                Role = UserRole.OfficeAdministrator,
+                Gender = Gender.Male,
+                BirthDate = new DateTime(1985, 7, 10),
+                AccountStatus = AccountStatus.Active,
+                Nationality = Nationality.British,
+                RemotePercentage = 0
+            });
+        }
+
+        private void InitializeEmployee(ModelBuilder builder)
+        {
+
+            IdentityUser user = new IdentityUser
+            {
+                Id = "3",
+                UserName = "employee@example.com",
+                NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
+            };
+
+            PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
+            user.PasswordHash = ph.HashPassword(user, "string11");
+
+            builder.Entity<IdentityUser>().HasData(user);
+
+            builder.Entity<UserModel>().HasData(new UserModel
+            {
+                AccountId = "3",
+                FirstName = "Mirela",
+                LastName = "Pavaliuc",
+                Email = "employee@example.com",
+                Role = UserRole.Employee,
+                Gender = Gender.Female,
+                BirthDate = new DateTime(1995, 11, 15),
+                AccountStatus = AccountStatus.Active,
+                Nationality = Nationality.Romanian,
+                RemotePercentage = 0
+            });
+        }
+
+        private void InitializeAccountRole(ModelBuilder builder, string userID, string roleId)
         {
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
@@ -83,11 +164,8 @@ namespace ATC_BE.Data
                 NormalizedName = role.ToString().ToUpper(),
             };
         }
+   
 
-        //building
-        public DbSet<BuildingModel> BuildingModels { get; set; }
-        //office
-        public DbSet<OfficeModel> OfficeModels { get; set; }
-        //desk
+        
     }
 }

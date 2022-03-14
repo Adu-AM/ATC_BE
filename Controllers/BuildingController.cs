@@ -22,6 +22,7 @@ namespace ATC_BE.Controllers
         /// The administrator can visualize the list with all buildings
         /// </summary>
         /// <returns>List of all Buildings</returns>
+        [Route("get-buildings")]
         [HttpGet]
         public async Task<ActionResult<List<BuildingModel>>> Get()
         {
@@ -35,11 +36,14 @@ namespace ATC_BE.Controllers
         /// </summary>
         /// <param name="name">String with the building's name</param>
         /// <returns>The specified building</returns>
-        [HttpGet("{id}")]
+        
+        [HttpGet]
+        [Route("get-building-by-name{name}")]
         public async Task<ActionResult<BuildingModel>> GetOneBuildingByName(string name)
         {
-            var building =await apiDbContext.BuildingModels.FindAsync(name);
-            if(building == null)
+            var building =await apiDbContext.BuildingModels
+                .Where( x => x.Name == name).ToListAsync();
+            if(building.Count == 0)
             {
                 return NotFound("Building not found");
             }
@@ -54,6 +58,7 @@ namespace ATC_BE.Controllers
         /// <param name="building">BuildingModel object</param>
         /// <returns>List with all old and new buildings</returns>
         [HttpPost]
+        [Route("add-buildings")]
         public async Task<ActionResult<List<BuildingModel>>> AddBuilding(BuildingModel building)
         {
             apiDbContext.BuildingModels.Add(building);
@@ -68,6 +73,7 @@ namespace ATC_BE.Controllers
         /// <param name="request">A buildingModel object</param>
         /// <returns>List with all buildings including the updated one</returns>
         [HttpPut]
+        [Route("update-buildings")]
         public async Task<ActionResult<List<BuildingModel>>> UpdateBuilding(BuildingModel request)
         {
             var dbBuilding = await apiDbContext.BuildingModels.FindAsync(request.BuildingId);
@@ -91,19 +97,33 @@ namespace ATC_BE.Controllers
         /// TODO: Add check if offices are free.
         /// </summary>
         /// <param name="buildingname">String containing the building name</param>
-        /// <returns>List with the remaining buildings</returns>
-        [HttpDelete("{name}")]
-        public async Task<ActionResult<List<BuildingModel>>> DeleteOneBuildingByID(string buildingname)
+        /// <returns>List with the remaining buildings</returns
+        [HttpDelete]
+        [Route("delete-building{name}")]
+        public async Task<ActionResult<List<BuildingModel>>> DeleteOneBuildingByID(string name)
         {
-            var dbBuilding = await apiDbContext.BuildingModels.FindAsync(buildingname);
-            if (dbBuilding == null)
+            try
             {
+                var dbBuilding = await apiDbContext.BuildingModels.Where(x => x.Name == name).ToListAsync();
+                if (dbBuilding == null)
+                {
+                    return NotFound("Building not found");
+                }
+                apiDbContext.BuildingModels.Remove(dbBuilding.ElementAt(0));
+
+                await apiDbContext.SaveChangesAsync();
+
+                return Ok(await apiDbContext.BuildingModels.ToListAsync());
+            }
+            catch (Exception)
+            {
+
                 return NotFound("Building not found");
             }
-            apiDbContext.BuildingModels.Remove(dbBuilding);
-            await apiDbContext.SaveChangesAsync();
+           
 
-            return Ok(await apiDbContext.BuildingModels.ToListAsync());
+            
+           
 
         }
 

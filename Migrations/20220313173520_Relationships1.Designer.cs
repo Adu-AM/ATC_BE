@@ -4,6 +4,7 @@ using ATC_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220313173520_Relationships1")]
+    partial class Relationships1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +59,7 @@ namespace ATC_BE.Migrations
                     b.Property<double>("Length")
                         .HasColumnType("float");
 
-                    b.Property<int>("OfficeId")
+                    b.Property<int?>("OfficeId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserEmail")
@@ -95,6 +97,9 @@ namespace ATC_BE.Migrations
                     b.Property<string>("BuildingName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Building_Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
@@ -239,21 +244,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "0c9bd545-c6a0-4b3d-b08a-8a82c5d686a6",
+                            ConcurrencyStamp = "adaf031e-edc7-4148-806f-4b668e414677",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "6a003917-8b10-4496-8454-0bf53fba29e4",
+                            ConcurrencyStamp = "483e76af-c192-428c-8963-f7612460898c",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "6845018d-60f9-4cd6-8897-3e966a36b897",
+                            ConcurrencyStamp = "228c5804-9e37-408e-9b14-f85ea597ed16",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -353,13 +358,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8b71ddbd-2633-468b-bc85-133e7cdfb238",
+                            ConcurrencyStamp = "4f446939-f57c-4a58-8473-4c01daa58598",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIZ5ctwxGQ77xyutwaPYioY5td7l4cPBTjIxC2t4LFcTGq04/g2QhNkrdHKBFwvnFw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENpSFoflcZNMg/O6BXrOsAjcJv0BmyE5kYnQpM/NME6Nr4b/deJIgHbOetYBo2IaqQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62ef865a-d577-41c4-902c-cbe7696e999e",
+                            SecurityStamp = "5525995f-6240-416a-b417-7a700cafa3f1",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
@@ -367,13 +372,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d2a436b-5712-4cd2-b9d3-2b461a346d69",
+                            ConcurrencyStamp = "44804465-8514-45b1-baf2-b3905ca687f3",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "OFFICE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEBN/gkc0SJ0bAuj0XXnBbtDvlPL5ZE735ohs4THz5ANrbb0llwpPBKs67XvTcXrqg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL37YEMbifWvpwkt1tJapPuDJxJaMLzHU6W8atV3lYnMB3r/QmIIxAdGWWoXQKd4dQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4f3f2aaa-12b7-4ade-937c-7d279c2494fb",
+                            SecurityStamp = "30b5ac1b-df53-493c-ae84-3f748ae79bba",
                             TwoFactorEnabled = false,
                             UserName = "office@example.com"
                         },
@@ -381,13 +386,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "de09390d-f3b9-4c64-9a94-a5c2dde10f2c",
+                            ConcurrencyStamp = "1410f163-85b4-4c7e-a3c3-84f70602cb90",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKuxg0jUi+zdBPVY0v9tcXX5rsxSvJ9nM2TBUSBE2GeAr4GrNoBbF0XK9flK1xuq5w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEg72JOLbvkaoma+oXDSnDAAeZD8NIW4HLJgGiWvbn32rt4Q3ivh/wWDpVekuwh9kw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5bdecacc-3d76-4c80-a3e3-16b7435c20bf",
+                            SecurityStamp = "b59eafc6-42d2-4d10-8398-50765c3d09d4",
                             TwoFactorEnabled = false,
                             UserName = "employee@example.com"
                         });
@@ -495,9 +500,7 @@ namespace ATC_BE.Migrations
                 {
                     b.HasOne("ATC_BE.Models.OfficeModel", "Office")
                         .WithMany("DeskList")
-                        .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OfficeId");
 
                     b.HasOne("ATC_BE.Models.UserModel", "User")
                         .WithOne("Desk")
