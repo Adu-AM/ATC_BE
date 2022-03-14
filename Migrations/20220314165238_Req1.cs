@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ATC_BE.Migrations
 {
-    public partial class Check1 : Migration
+    public partial class Req1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace ATC_BE.Migrations
                 name: "BuildingModels",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    BuildingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FloorCount = table.Column<int>(type: "int", nullable: false),
@@ -60,7 +60,7 @@ namespace ATC_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingModels", x => x.Id);
+                    table.PrimaryKey("PK_BuildingModels", x => x.BuildingId);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,7 +202,6 @@ namespace ATC_BE.Migrations
                     OfficeAdmin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Width = table.Column<double>(type: "float", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
-                    Building_Id = table.Column<int>(type: "int", nullable: false),
                     BuildingId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -212,7 +211,29 @@ namespace ATC_BE.Migrations
                         name: "FK_OfficeModels_BuildingModels_BuildingId",
                         column: x => x.BuildingId,
                         principalTable: "BuildingModels",
-                        principalColumn: "Id",
+                        principalColumn: "BuildingId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RequestRemoteModel",
+                columns: table => new
+                {
+                    RequestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RemotePercentage = table.Column<int>(type: "int", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(24)", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(100)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RequestRemoteModel", x => x.RequestId);
+                    table.ForeignKey(
+                        name: "FK_RequestRemoteModel_UserDetails_UserEmail",
+                        column: x => x.UserEmail,
+                        principalTable: "UserDetails",
+                        principalColumn: "Email",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -225,14 +246,21 @@ namespace ATC_BE.Migrations
                     Vacancy = table.Column<string>(type: "nvarchar(24)", nullable: false),
                     Width = table.Column<double>(type: "float", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
-                    User_Id = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                    UserEmail = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    OfficeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeskModels", x => x.DeskId);
                     table.ForeignKey(
-                        name: "FK_DeskModels_UserDetails_User_Id",
-                        column: x => x.User_Id,
+                        name: "FK_DeskModels_OfficeModels_OfficeId",
+                        column: x => x.OfficeId,
+                        principalTable: "OfficeModels",
+                        principalColumn: "OfficeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DeskModels_UserDetails_UserEmail",
+                        column: x => x.UserEmail,
                         principalTable: "UserDetails",
                         principalColumn: "Email");
                 });
@@ -242,9 +270,9 @@ namespace ATC_BE.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "437e2fd6-c557-428a-8f92-289ead86052a", "Administrator", "ADMINISTRATOR" },
-                    { "2", "6e46fbe1-628c-4b77-a6c5-c1b57d0a6a01", "OfficeAdministrator", "OFFICEADMINISTRATOR" },
-                    { "3", "b917b97d-37f6-4fa5-87bd-e3dbd7b908d2", "Employee", "EMPLOYEE" }
+                    { "1", "237fa452-41b3-45ea-8213-32e6b94f755c", "Administrator", "ADMINISTRATOR" },
+                    { "2", "ac3bc71c-56a3-4a3f-9aac-be219d7d8871", "OfficeAdministrator", "OFFICEADMINISTRATOR" },
+                    { "3", "98a7c47b-3b74-44b9-8206-3356ea22814e", "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.InsertData(
@@ -252,9 +280,9 @@ namespace ATC_BE.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "4759fa71-8e70-45f2-a97a-013bce8fe727", null, false, false, null, null, "ADMIN@EXAMPLE.COM", "AQAAAAEAACcQAAAAEGMfnxxicwa0lQo1tq2K7KFWwCQntAdeVO8L4tjMoI37IbdOFZh+IIFx3Fb2p8UGRw==", null, false, "a60ed5c4-1595-4fc1-8bf5-71bd6e5ccfe4", false, "admin@example.com" },
-                    { "2", 0, "b58da4e0-e8bc-494c-a63f-f97d22cc5406", null, false, false, null, null, "OFFICE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEE/6XJVFOGD7GS729euf3FerynZG455PdelmqhTnpHVvOLYg+RNBbXEbL4KJzhFztg==", null, false, "b4186260-9369-422a-9caf-ac3603c23413", false, "office@example.com" },
-                    { "3", 0, "675d7e7d-4bb4-47cb-9842-d8f9cecd7c43", null, false, false, null, null, "EMPLOYEE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEESn8XMcd2yE5PPHyBbNBLWlXs7157I5WZRYiBt35XQYC5BInoaHJTVZLxMlSj4YuQ==", null, false, "0efa4cc6-3156-4126-a15f-8ca457df5430", false, "employee@example.com" }
+                    { "1", 0, "28d305f3-4dfa-4b9e-a676-ebc18f919485", null, false, false, null, null, "ADMIN@EXAMPLE.COM", "AQAAAAEAACcQAAAAEM0prCAViPXgAqWdOipewMjZMWQyVFxlaF+5evOJMbrT4HuWrQfsBfFbW3eOHpjZ0Q==", null, false, "afec99f4-5d21-45e0-80eb-016387681c5a", false, "admin@example.com" },
+                    { "2", 0, "c6a9e85a-dca2-4980-a5c1-697ead525c35", null, false, false, null, null, "OFFICE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEJGJiSn9twTiMwuRlm7N+hqkVdvdW+339e00OUkNmdIvMe3ApYDut5gFiVLvBqfHJA==", null, false, "b68165d7-32d2-43dc-bafe-e69450d0cc31", false, "office@example.com" },
+                    { "3", 0, "a7bca25b-b3ac-40c8-9db2-3b1d31a05247", null, false, false, null, null, "EMPLOYEE@EXAMPLE.COM", "AQAAAAEAACcQAAAAEFW88G8r3ePFMJgB8Oj4yRp/H2JxpSM77VX2VqtS8Xpn8PKAjdG+KVFR6iYBuF0a4g==", null, false, "73f28649-b45d-4ef7-8eae-94451f348edf", false, "employee@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -322,16 +350,26 @@ namespace ATC_BE.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeskModels_User_Id",
+                name: "IX_DeskModels_OfficeId",
                 table: "DeskModels",
-                column: "User_Id",
+                column: "OfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeskModels_UserEmail",
+                table: "DeskModels",
+                column: "UserEmail",
                 unique: true,
-                filter: "[User_Id] IS NOT NULL");
+                filter: "[UserEmail] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OfficeModels_BuildingId",
                 table: "OfficeModels",
                 column: "BuildingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RequestRemoteModel_UserEmail",
+                table: "RequestRemoteModel",
+                column: "UserEmail");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -355,13 +393,16 @@ namespace ATC_BE.Migrations
                 name: "DeskModels");
 
             migrationBuilder.DropTable(
-                name: "OfficeModels");
+                name: "RequestRemoteModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "OfficeModels");
 
             migrationBuilder.DropTable(
                 name: "UserDetails");
