@@ -19,6 +19,8 @@ namespace ATC_BE.Data
         // Desk
         public DbSet<DeskModel> DeskModels { get; set; }
 
+        // Remote 
+        public DbSet<RequestRemoteModel> RequestRemoteModels { get; set; }
 
 
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
@@ -164,6 +166,8 @@ namespace ATC_BE.Data
                 NormalizedName = role.ToString().ToUpper(),
             };
         }
+
+        public DbSet<ATC_BE.Models.RequestRemoteModel> RequestRemoteModel { get; set; }
    
 
         

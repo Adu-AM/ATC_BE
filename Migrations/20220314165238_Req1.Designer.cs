@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATC_BE.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20220313133353_Check3")]
-    partial class Check3
+    [Migration("20220314165238_Req1")]
+    partial class Req1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,7 +59,10 @@ namespace ATC_BE.Migrations
                     b.Property<double>("Length")
                         .HasColumnType("float");
 
-                    b.Property<string>("User_Id")
+                    b.Property<int>("OfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserEmail")
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Vacancy")
@@ -71,9 +74,11 @@ namespace ATC_BE.Migrations
 
                     b.HasKey("DeskId");
 
-                    b.HasIndex("User_Id")
+                    b.HasIndex("OfficeId");
+
+                    b.HasIndex("UserEmail")
                         .IsUnique()
-                        .HasFilter("[User_Id] IS NOT NULL");
+                        .HasFilter("[UserEmail] IS NOT NULL");
 
                     b.ToTable("DeskModels");
                 });
@@ -92,9 +97,6 @@ namespace ATC_BE.Migrations
                     b.Property<string>("BuildingName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Building_Id")
-                        .HasColumnType("int");
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
@@ -120,6 +122,36 @@ namespace ATC_BE.Migrations
                     b.HasIndex("BuildingId");
 
                     b.ToTable("OfficeModels");
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.RequestRemoteModel", b =>
+                {
+                    b.Property<int>("RequestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"), 1L, 1);
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RemotePercentage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(24)");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("RequestId");
+
+                    b.HasIndex("UserEmail");
+
+                    b.ToTable("RequestRemoteModel");
                 });
 
             modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
@@ -239,21 +271,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "2bcc3b45-fe18-4ee7-a763-aa3861e2b15c",
+                            ConcurrencyStamp = "237fa452-41b3-45ea-8213-32e6b94f755c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "89e438df-2604-43c7-8bb5-ff2b3be10626",
+                            ConcurrencyStamp = "ac3bc71c-56a3-4a3f-9aac-be219d7d8871",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "1249dedc-9809-4bf3-b9c8-491cfb637378",
+                            ConcurrencyStamp = "98a7c47b-3b74-44b9-8206-3356ea22814e",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -353,13 +385,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1a913ed6-9b01-4a60-943a-56b4593f2ad2",
+                            ConcurrencyStamp = "28d305f3-4dfa-4b9e-a676-ebc18f919485",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPpV8hatxm/b2q8eycuUAkk1TBj43udSSKsnSEHwJ/JXqETSHef5a1d0vOoAkXdqnQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM0prCAViPXgAqWdOipewMjZMWQyVFxlaF+5evOJMbrT4HuWrQfsBfFbW3eOHpjZ0Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ff37b931-6580-4696-b2b5-9e29511cda5b",
+                            SecurityStamp = "afec99f4-5d21-45e0-80eb-016387681c5a",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
@@ -367,13 +399,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "390c36d5-76d8-4125-9242-175f9f0fdefd",
+                            ConcurrencyStamp = "c6a9e85a-dca2-4980-a5c1-697ead525c35",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "OFFICE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEXlmyDbz4ak2g7O+kUxNyaaxhA8iHyj4LhZqVVnKuSSgwTKueky1H7s3BHFmGzbLg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJGJiSn9twTiMwuRlm7N+hqkVdvdW+339e00OUkNmdIvMe3ApYDut5gFiVLvBqfHJA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "44174581-7b53-4f58-8230-c90691439a1f",
+                            SecurityStamp = "b68165d7-32d2-43dc-bafe-e69450d0cc31",
                             TwoFactorEnabled = false,
                             UserName = "office@example.com"
                         },
@@ -381,13 +413,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "30ae3057-abbd-4c02-bdec-aea53ab48044",
+                            ConcurrencyStamp = "a7bca25b-b3ac-40c8-9db2-3b1d31a05247",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDznMofFbck5Qr4kbkMcTJNkAR9LXRwiIextwqXSjzsBXc4wod7kyHEIAfnhPlHDnQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFW88G8r3ePFMJgB8Oj4yRp/H2JxpSM77VX2VqtS8Xpn8PKAjdG+KVFR6iYBuF0a4g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2f48f2e6-4cf3-48ae-b841-298f67aa04a1",
+                            SecurityStamp = "73f28649-b45d-4ef7-8eae-94451f348edf",
                             TwoFactorEnabled = false,
                             UserName = "employee@example.com"
                         });
@@ -493,9 +525,17 @@ namespace ATC_BE.Migrations
 
             modelBuilder.Entity("ATC_BE.Models.DeskModel", b =>
                 {
+                    b.HasOne("ATC_BE.Models.OfficeModel", "Office")
+                        .WithMany("DeskList")
+                        .HasForeignKey("OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ATC_BE.Models.UserModel", "User")
                         .WithOne("Desk")
-                        .HasForeignKey("ATC_BE.Models.DeskModel", "User_Id");
+                        .HasForeignKey("ATC_BE.Models.DeskModel", "UserEmail");
+
+                    b.Navigation("Office");
 
                     b.Navigation("User");
                 });
@@ -509,6 +549,17 @@ namespace ATC_BE.Migrations
                         .IsRequired();
 
                     b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("ATC_BE.Models.RequestRemoteModel", b =>
+                {
+                    b.HasOne("ATC_BE.Models.UserModel", "User")
+                        .WithMany("RemoteRequests")
+                        .HasForeignKey("UserEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -567,10 +618,16 @@ namespace ATC_BE.Migrations
                     b.Navigation("OfficeList");
                 });
 
+            modelBuilder.Entity("ATC_BE.Models.OfficeModel", b =>
+                {
+                    b.Navigation("DeskList");
+                });
+
             modelBuilder.Entity("ATC_BE.Models.UserModel", b =>
                 {
-                    b.Navigation("Desk")
-                        .IsRequired();
+                    b.Navigation("Desk");
+
+                    b.Navigation("RemoteRequests");
                 });
 #pragma warning restore 612, 618
         }

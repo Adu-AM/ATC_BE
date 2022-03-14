@@ -58,5 +58,9 @@ namespace ATC_BE.Models
         /// Desk Relationships
         [JsonIgnore]
         public DeskModel? Desk { get; set; }
+
+        // Remote request relationship
+        public virtual ICollection<RequestRemoteModel> RemoteRequests { get; set; }
+
     }
 }
