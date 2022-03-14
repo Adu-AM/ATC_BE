@@ -18,17 +18,20 @@ namespace ATC_BE.Controllers
             this.apiDbContext = apiDbContext;
         }
         [HttpGet]
-        [Route("get-offices")]
+        [Route("get-desks")]
         public async Task<ActionResult<List<DeskModel>>> Get()
         {
+            var desks = await apiDbContext.DeskModels.ToListAsync();
 
+            if(desks.Count == 0)
+                return NotFound();  
 
-            return Ok(await apiDbContext.DeskModels.ToListAsync());
+            return Ok(desks);
 
         }
 
         [HttpGet]
-        [Route("get-office-by-id{id}")]
+        [Route("get-desk-by-id{id}")]
         public async Task<ActionResult<DeskModel>> GetOneDeskByID(int id)
         {
             var office = await apiDbContext.DeskModels.FindAsync(id);
@@ -40,44 +43,59 @@ namespace ATC_BE.Controllers
             return Ok(office);
 
         }
-        /*[HttpGet]
-        [Route("get-offices-by-building-id{id}")]
-        public async Task<ActionResult<List<DeskModel>>> GetOneDesksByBuildingId(int id)
+     
+        [HttpGet]
+        [Route("get-desk-by-user-email{email}")]
+        public async Task<ActionResult<List<DeskModel>>> GetOneDesksByUserEmail(string email)
         {
-            var offices = await apiDbContext.DeskModels
-                .Where(c => c.BuildingId == id).ToListAsync();
-            if (offices == null)
+           var desk = await apiDbContext.DeskModels
+                .Where(x=> x.UserEmail == email).ToListAsync();
+
+            if (desk.Count == 0)
             {
                 return NotFound("Desk not found");
             }
 
-            return Ok(offices);
 
+            return Ok(desk);
         }
-
+        
         [HttpPost]
-        [Route("add-office")]
+        [Route("add-desk")]
         public async Task<ActionResult<List<DeskModel>>> AddDesk(AddDeskDto request)
         {
-            var building = await apiDbContext.BuildingModels
-                .Where(c => c.Name == request.BuildingName).ToListAsync();
 
-            if (building == null)
+            var user = await apiDbContext.UserDetails
+                .Where(c => c.Email == request.UserEmail).ToListAsync();
+
+            if (user == null)
                 return NotFound();
+            var office = await apiDbContext.OfficeModels.FindAsync(request.OfficeId);
+
+            if (office == null)
+            {
+                return NotFound("Office not found");
+            }
 
             var newDesk = new DeskModel()
             {
-                DeskId = request.DeskId,
-                BuildingName = request.BuildingName,
-                BuildingId = building[0].BuildingId,
-                Floor = request.Floor,
-                TotalDeskCount = request.TotalDeskCount,
-                UsableDeskCount = request.UsableDeskCount,
-                DeskAdmin = request.DeskAdmin,
-                Width = request.Width,
+                Vacancy = request.Vacancy,  
+                Width = request.Width, 
                 Length = request.Length,
-
+                UserEmail = request.UserEmail,
+                OfficeId = office.OfficeId,
             };
+
+            if (newDesk.Vacancy == Data.Enums.DeskStatus.Occupied)
+            {
+                if (newDesk.UserEmail == null)
+                    return BadRequest("Email not given");
+            }
+            else
+            {
+                if (newDesk.UserEmail != null)
+                    return BadRequest("why u giv email");
+            }
 
             apiDbContext.DeskModels.Add(newDesk);
             await apiDbContext.SaveChangesAsync();
@@ -85,9 +103,9 @@ namespace ATC_BE.Controllers
             return Ok(await apiDbContext.DeskModels.ToListAsync());
 
         }
-        */
+
         [HttpPut]
-        [Route("update-office")]
+        [Route("update-desk")]
         public async Task<ActionResult<List<DeskModel>>> UpdateDesk(DeskModel request)
         {
             var dbDesk = await apiDbContext.DeskModels.FindAsync(request.DeskId);
@@ -96,9 +114,11 @@ namespace ATC_BE.Controllers
                 return NotFound("Desk not found");
             }
 
-            dbDesk.DeskId = request.DeskId;
             dbDesk.Width = request.Width;
             dbDesk.Length = request.Length;
+            dbDesk.UserEmail = request.UserEmail;
+            dbDesk.OfficeId = request.OfficeId;
+            dbDesk.Vacancy = request.Vacancy;
 
             await apiDbContext.SaveChangesAsync();
 
@@ -107,7 +127,7 @@ namespace ATC_BE.Controllers
         }
 
         [HttpDelete]
-        [Route("delete-office-by-id{id}")]
+        [Route("delete-desk-by-id{id}")]
         public async Task<ActionResult<List<DeskModel>>> DeleteOneDeskByID(int id)
         {
             var dbDesk = await apiDbContext.DeskModels.FindAsync(id);
@@ -121,7 +141,6 @@ namespace ATC_BE.Controllers
             return Ok(await apiDbContext.DeskModels.ToListAsync());
 
         }
-
     }
 }
 

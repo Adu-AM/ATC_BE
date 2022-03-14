@@ -53,5 +53,10 @@ namespace ATC_BE.Models
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Column(TypeName = "nvarchar(24)")]
         public Nationality? Nationality { get; set; }
+
+
+        /// Desk Relationships
+        [JsonIgnore]
+        public DeskModel? Desk { get; set; }
     }
 }

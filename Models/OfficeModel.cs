@@ -6,6 +6,7 @@ namespace ATC_BE.Models
     public class OfficeModel
     {
         [Key]
+        [Required]
         public int OfficeId { get; set; }
         [Required]
         public string BuildingName { get; set; } = String.Empty;
@@ -19,9 +20,18 @@ namespace ATC_BE.Models
         public double Width { get; set; }
         public double Length { get; set; }
 
+        /// <summary>
+        /// Building Relationship
+        /// </summary>
         [JsonIgnore]
-        public BuildingModel Building { get; set; }
-        [JsonIgnore]
+        public BuildingModel? Building { get; set; }
         public int BuildingId { get; set; }
+
+
+        /// <summary>
+        /// Desk Relationship
+        /// </summary>
+        [JsonIgnore]
+        public ICollection<DeskModel>? DeskList { get; set; }
     }
 }

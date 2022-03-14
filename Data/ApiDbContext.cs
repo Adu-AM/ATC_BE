@@ -8,11 +8,23 @@ namespace ATC_BE.Data
 {
     public class ApiDbContext: IdentityDbContext<IdentityUser>
     {
-        public ApiDbContext(DbContextOptions<ApiDbContext> options): base(options)
+        // Users
+        public DbSet<UserModel> UserDetails { get; set; }
+        // Building
+        public DbSet<BuildingModel> BuildingModels { get; set; }
+
+        // Office
+        public DbSet<OfficeModel> OfficeModels { get; set; }
+
+        // Desk
+        public DbSet<DeskModel> DeskModels { get; set; }
+
+
+
+        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -26,9 +38,14 @@ namespace ATC_BE.Data
             InitializeAccountRole(builder, "1", "1");
             InitializeAccountRole(builder, "2", "2");
             InitializeAccountRole(builder, "3", "3");
+
+            builder.Entity<UserModel>()
+                .HasOne(a => a.Desk)
+                .WithOne(b => b.User)
+                .HasForeignKey<DeskModel>(b => b.UserEmail);
         }
 
-        public DbSet<UserModel> UserDetails { get; set; }
+     
 
         private void InitializeRoles(ModelBuilder builder)
         {
@@ -147,12 +164,8 @@ namespace ATC_BE.Data
                 NormalizedName = role.ToString().ToUpper(),
             };
         }
+   
 
-        //building
-        public DbSet<BuildingModel> BuildingModels { get; set; }
-        //office
-        public DbSet<OfficeModel> OfficeModels { get; set; }
-        //desk
-        public DbSet<DeskModel> DeskModels { get; set; }
+        
     }
 }
