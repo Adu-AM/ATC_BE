@@ -59,6 +59,33 @@ namespace ATC_BE.Controllers
 
         }
 
+        [HttpGet]
+        [Route("get-offices-by-floor-in-building{name}/{floor}")]
+        public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByBuildingNameAndFloor(string name, int floor)
+        {
+            var building = await apiDbContext.BuildingModels
+                .Where(x => x.Name == name).ToListAsync();
+            if (building.Count == 0)
+                return NotFound("Building not found");
+
+            if (building.ElementAt(0).FloorCount < floor)
+                return NotFound("Floor not found");
+
+            var offices = await apiDbContext.OfficeModels
+                .Where(c => c.BuildingName == name)
+                .Where(c=> c.Floor == floor)
+                .ToListAsync();
+
+            if (offices.Count == 0)
+            {
+                return NotFound("Office not found");
+            }
+
+            return Ok(offices);
+
+        }
+
+
         [HttpPost]
         [Route("add-office")]
         public async Task<ActionResult<List<OfficeModel>>> AddOffice(AddOfficeDto request)
