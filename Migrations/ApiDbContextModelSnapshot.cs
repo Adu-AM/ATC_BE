@@ -239,21 +239,21 @@ namespace ATC_BE.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "0c9bd545-c6a0-4b3d-b08a-8a82c5d686a6",
+                            ConcurrencyStamp = "81a8df20-be6b-4d16-931a-55e1369f7174",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "6a003917-8b10-4496-8454-0bf53fba29e4",
+                            ConcurrencyStamp = "43717eed-d41a-462d-81f6-4414390c7cca",
                             Name = "OfficeAdministrator",
                             NormalizedName = "OFFICEADMINISTRATOR"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "6845018d-60f9-4cd6-8897-3e966a36b897",
+                            ConcurrencyStamp = "6fc3c7be-22e3-43ac-875e-24a4b72cdd5a",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -353,13 +353,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8b71ddbd-2633-468b-bc85-133e7cdfb238",
+                            ConcurrencyStamp = "16dd5f86-fc4c-4631-8dab-d1bcc0303c03",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIZ5ctwxGQ77xyutwaPYioY5td7l4cPBTjIxC2t4LFcTGq04/g2QhNkrdHKBFwvnFw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKr/YI0dJ5S6O+iDRtA8NQ/S7Y4G2FRQ3mZiuPDbhZOe+U1Qc38A4j5OKeoY6uRDdg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62ef865a-d577-41c4-902c-cbe7696e999e",
+                            SecurityStamp = "fc57e182-3e46-45f5-b308-c442c1d771d3",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
@@ -367,13 +367,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d2a436b-5712-4cd2-b9d3-2b461a346d69",
+                            ConcurrencyStamp = "6ad8a5c8-32eb-4e68-a06e-893fbc314d15",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "OFFICE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEBN/gkc0SJ0bAuj0XXnBbtDvlPL5ZE735ohs4THz5ANrbb0llwpPBKs67XvTcXrqg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEg1NB5Mcf3tOpOcbZi+Bg46cMx9Gn58CejwV/qOHm4rP1L8CYuJGSGiVBRalkQsng==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4f3f2aaa-12b7-4ade-937c-7d279c2494fb",
+                            SecurityStamp = "4d9aae18-5af9-4b45-9c91-f7bbc48d7bf5",
                             TwoFactorEnabled = false,
                             UserName = "office@example.com"
                         },
@@ -381,13 +381,13 @@ namespace ATC_BE.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "de09390d-f3b9-4c64-9a94-a5c2dde10f2c",
+                            ConcurrencyStamp = "560a4430-db27-4680-ae7c-bd12003377cb",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "EMPLOYEE@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKuxg0jUi+zdBPVY0v9tcXX5rsxSvJ9nM2TBUSBE2GeAr4GrNoBbF0XK9flK1xuq5w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKoeg4AYBi4zGPvWruzsL/AuJxr1H0VB5lq3NAMKkq0WnBGt/ohKk4+MtHPKJskCkQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5bdecacc-3d76-4c80-a3e3-16b7435c20bf",
+                            SecurityStamp = "8ffa140e-2504-4f6b-b751-bd3fd0e76808",
                             TwoFactorEnabled = false,
                             UserName = "employee@example.com"
                         });

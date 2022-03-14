@@ -24,12 +24,30 @@ namespace ATC_BE.Controllers
             var desks = await apiDbContext.DeskModels.ToListAsync();
 
             if(desks.Count == 0)
-                return NotFound();  
+                return NotFound("No desks found");  
 
             return Ok(desks);
 
         }
+        [HttpGet]
+        [Route("get-desks-by-office-id{id}")]
+        public async Task<ActionResult<List<OfficeModel>>> GetOneOfficesByOfficeId(int id)
+        {
+            var office = await apiDbContext.OfficeModels
+                .Where(x => x.OfficeId == id).ToListAsync();
+            if (office.Count == 0)
+                return NotFound("Building not found");
 
+            var desks = await apiDbContext.OfficeModels
+                .Where(c => c.OfficeId == id).ToListAsync();
+            if (desks.Count == 0)
+            {
+                return NotFound("Office not found");
+            }
+
+            return Ok(desks);
+
+        }
         [HttpGet]
         [Route("get-desk-by-id{id}")]
         public async Task<ActionResult<DeskModel>> GetOneDeskByID(int id)
@@ -68,8 +86,9 @@ namespace ATC_BE.Controllers
             var user = await apiDbContext.UserDetails
                 .Where(c => c.Email == request.UserEmail).ToListAsync();
 
-            if (user == null)
-                return NotFound();
+            if (user.Count == 0)
+                return NotFound("User not found");
+
             var office = await apiDbContext.OfficeModels.FindAsync(request.OfficeId);
 
             if (office == null)
