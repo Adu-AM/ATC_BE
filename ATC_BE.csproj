@@ -7,21 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Configurations\**" />
-    <Compile Remove="Data\DefaultData\**" />
-    <Compile Remove="Services\**" />
-    <Content Remove="Data\Configurations\**" />
-    <Content Remove="Data\DefaultData\**" />
-    <Content Remove="Services\**" />
-    <EmbeddedResource Remove="Data\Configurations\**" />
-    <EmbeddedResource Remove="Data\DefaultData\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <None Remove="Data\Configurations\**" />
-    <None Remove="Data\DefaultData\**" />
-    <None Remove="Services\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
@@ -37,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Data\Configurations\" />
+    <Folder Include="Data\DefaultData\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

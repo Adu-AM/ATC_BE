@@ -25,6 +25,7 @@ namespace ATC_BE.Models
         [MaxLength(100)]
         public string? LastName { get; set; }
 
+
         [Required]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Column(TypeName = "nvarchar(24)")]
@@ -38,25 +39,17 @@ namespace ATC_BE.Models
         [Required]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Column(TypeName = "nvarchar(24)")]
-        public AccountStatus AccountStatus { get; set; }
+        public AccountStatus AccountStatus { get; set; }  // La creearea contului acesta devine activ
 
         [Required]
         [Range(0, 100)]
         public int RemotePercentage { get; set; } = 0; // 0-100%
 
         // Optional fields
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        [Column(TypeName = "Date")]
         public DateTime? BirthDate { get; set; } 
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Column(TypeName = "nvarchar(24)")]
         public Nationality? Nationality { get; set; }
-
-
-        /// Desk Relationships
-        [JsonIgnore]
-        public DeskModel? Desk { get; set; }
     }
 }
