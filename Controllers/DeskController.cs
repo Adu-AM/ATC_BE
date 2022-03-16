@@ -154,6 +154,11 @@ namespace ATC_BE.Controllers
             {
                 return NotFound("Desk not found");
             }
+            if(dbDesk.UserEmail != null)
+            {
+                return BadRequest("Desk stil has user");
+            }
+
             apiDbContext.DeskModels.Remove(dbDesk);
             await apiDbContext.SaveChangesAsync();
 
