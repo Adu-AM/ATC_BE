@@ -1,9 +1,9 @@
 ﻿using ATC_BE.Models;
 using ATC_BE.Data;
 using ATC_BE.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace ATC_BE.Controllers
 {
@@ -116,6 +116,12 @@ namespace ATC_BE.Controllers
                 {
                     return NotFound("Building not found");
                 }
+
+                var dbOffices = await apiDbContext.OfficeModels.Where(x => x.BuildingName == name).ToListAsync();
+
+                if (dbOffices.Count > 0)
+                    return BadRequest("Building still has offices");
+
                 apiDbContext.BuildingModels.Remove(dbBuilding.ElementAt(0));
 
                 await apiDbContext.SaveChangesAsync();
@@ -127,12 +133,29 @@ namespace ATC_BE.Controllers
 
                 return NotFound("Building not found");
             }
-           
-
-            
-           
 
         }
+
+        [HttpGet]
+        [Route("get-everything")]
+        public async Task<ActionResult<BuildingModel>> GetEverythin()
+        {
+            var allBuildings = await apiDbContext.BuildingModels.ToListAsync();
+
+
+            var allOffices = await apiDbContext.OfficeModels.ToListAsync();
+
+            var allDesks = await apiDbContext.DeskModels.ToListAsync();
+
+            ArrayList arrayList = new ArrayList();
+            arrayList.Add(allBuildings);
+            arrayList.Add(allOffices);
+            arrayList.Add(allDesks);
+
+            return Ok(arrayList);
+
+        }
+
 
     }
 }

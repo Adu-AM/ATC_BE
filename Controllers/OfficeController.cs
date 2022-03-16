@@ -149,6 +149,11 @@ namespace ATC_BE.Controllers
             {
                 return NotFound("Office not found");
             }
+            var dbDesks = await apiDbContext.DeskModels.Where(x => x.OfficeId == id).ToListAsync();
+
+            if (dbDesks.Count > 0)
+                return BadRequest("Office still has desks");
+
             apiDbContext.OfficeModels.Remove(dbOffice);
             await apiDbContext.SaveChangesAsync();
 
