@@ -60,7 +60,8 @@ namespace ATC_BE.Models
         public DeskModel? Desk { get; set; }
 
         // Remote request relationship
-        public virtual ICollection<RequestRemoteModel> RemoteRequests { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<RequestRemoteModel>? RemoteRequests { get; set; }
 
     }
 }
